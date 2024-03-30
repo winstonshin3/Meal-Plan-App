@@ -46,12 +46,12 @@ for PORT in $(seq $START $END); do
         # Kill the temporary process
         kill $TEMP_PID
 
-        exec sqlplus ora_mwu584/a76668078@stu @initProjectTables.sql @exit
+        # exec sqlplus ora_mwu584/a76668078@stu @initProjectTables.sql @exit
 
-        # exec start initProjectTables.sql
-        echo "Executed .sql file. Disconnecting from sqlplus now.."
+        # # exec start initProjectTables.sql
+        # echo "Executed .sql file. Disconnecting from sqlplus now.."
         
-        echo "Starting Node application.."
+        # echo "Starting Node application.."
 
         # Replace the bash process with the Node process
         exec node server.js
