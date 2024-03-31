@@ -76,46 +76,85 @@ async function testOracleConnection() {
     });
 }
 
-async function fetchDemotableFromDb() {
+async function fetchR14FromDb() {
     return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM DEMOTABLE');
+        const result = await connection.execute('SELECT * FROM R14');
         return result.rows;
     }).catch(() => {
         return [];
     });
 }
 
-async function initiateDemotable() {
+async function fetchR15FromDb() {
     return await withOracleDB(async (connection) => {
-        try {
-            await connection.execute(`DROP TABLE DEMOTABLE`);
-        } catch(err) {
-            console.log('Table might not exist, proceeding to create...');
-        }
+        const result = await connection.execute('SELECT * FROM R15');
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
 
-        const result = await connection.execute(`
-            CREATE TABLE DEMOTABLE (
-                id NUMBER PRIMARY KEY,
-                name VARCHAR2(20),
-                text1 VARCHAR2(20),
-                text2 VARCHAR2(20)
-            )
-        `);
-        
-        return true;
+// async function initiateDemotable() {
+//     return await withOracleDB(async (connection) => {
+//         try {
+//             await connection.execute(`DROP TABLE DEMOTABLE`);
+//         } catch(err) {
+//             console.log('Table might not exist, proceeding to create...');
+//         }
+
+//         const result = await connection.execute(`
+//             CREATE TABLE DEMOTABLE (
+//                 id NUMBER PRIMARY KEY,
+//                 name VARCHAR2(20),
+//                 text1 VARCHAR2(20),
+//                 text2 VARCHAR2(20)
+//             )
+//         `);
+//         return true;
+//     }).catch(() => {
+//         return false;
+//     });
+// }
+
+// async function insertDemotable(id, name, text1, text2) {
+//     return await withOracleDB(async (connection) => {
+//         const result = await connection.execute(
+//             `INSERT INTO DEMOTABLE (id, name, text1, text2) VALUES (:id, :name, :text1, :text2)`,
+//             [id, name, text1, text2],
+//             { autoCommit: true }
+//         );
+
+//         return result.rowsAffected && result.rowsAffected > 0;
+//     }).catch(() => {
+//         return false;
+//     });
+// }
+
+async function insertR15(body) {
+    const { userID, mealName, mealPlanName, foodName, recipeName,
+        ingredientName, groceryStoreName, groceryStoreAddress, quantity, price } = body;
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `INSERT INTO R15 (userID, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName) VALUES (:userID, :mealName, :mealPlanName, :ingredientName, :recipeName, :groceryStoreName, :groceryStoreAddress, :foodName)`,
+            [userID, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName],
+            { autoCommit: true }
+        );
+        return result.rowsAffected && result.rowsAffected > 0;
     }).catch(() => {
         return false;
     });
 }
 
-async function insertDemotable(id, name, text1, text2) {
+
+async function insertR14(body) {
+    const { userID, mealName, mealPlanName, foodName, recipeName,
+        ingredientName, groceryStoreName, groceryStoreAddress, quantity, price } = body;
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `INSERT INTO DEMOTABLE (id, name, text1, text2) VALUES (:id, :name, :text1, :text2)`,
-            [id, name, text1, text2],
+            `INSERT INTO R15 (userID, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName) VALUES (:userID, :mealName, :mealPlanName, :ingredientName, :recipeName, :groceryStoreName, :groceryStoreAddress, :foodName)`,
+            [userID, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName],
             { autoCommit: true }
         );
-
         return result.rowsAffected && result.rowsAffected > 0;
     }).catch(() => {
         return false;
@@ -147,9 +186,10 @@ async function countDemotable() {
 
 module.exports = {
     testOracleConnection,
-    fetchDemotableFromDb,
-    initiateDemotable, 
-    insertDemotable, 
+    fetchR14FromDb,
+    fetchR15FromDb,
+    insertR15,
+    insertR14, 
     updateNameDemotable, 
     countDemotable
 };

@@ -17,24 +17,55 @@ router.get('/check-db-connection', async (req, res) => {
 
 router.get('/demotable', async (req, res) => {
     // Implementation of the backend
-    const tableContent = await appService.fetchDemotableFromDb();
+    const tableContent = await appService.fetchR14FromDb();
     // Returning result to front end.
     res.json({data: tableContent});
 });
 
-router.post("/initiate-demotable", async (req, res) => {
-    const initiateResult = await appService.initiateDemotable();
-    if (initiateResult) {
+router.get('/initiate-demotable', async (req, res) => {
+    // Implementation of the backend
+    const tableContent = await appService.fetchR15FromDb();
+    // Returning result to front end.
+    res.json({data: tableContent});
+});
+
+// router.post("/initiate-demotable", async (req, res) => {
+//     const initiateResult = await appService.fetchR14FromDb(); // TODO changed
+//     if (initiateResult) {
+//         res.json({ success: true });
+//     } else {
+//         res.status(500).json({ success: false });
+//     }
+// });
+
+// router.post("/insert-demotable", async (req, res) => {
+//     const { id, name, text1, text2 } = req.body;
+//     const insertResult = await appService.insertDemotable(id, name, text1, text2);
+//     if (insertResult) {
+//         res.json({ success: true });
+//     } else {
+//         res.status(500).json({ success: false });
+//     }
+// });
+
+router.post("/insert-homeMadeFoodName", async (req, res) => {
+    console.log(req.body);
+    const insertResultR15 = await appService.insertR15(req.body);
+    // const insertResultR12 = await appService.insertR12(req.body);
+    // const insertResultR10 = await appService.insertR10(req.body);
+    if (insertResultR15) {
         res.json({ success: true });
     } else {
         res.status(500).json({ success: false });
     }
 });
 
-router.post("/insert-demotable", async (req, res) => {
-    const { id, name, text1, text2 } = req.body;
-    const insertResult = await appService.insertDemotable(id, name, text1, text2);
-    if (insertResult) {
+router.post("/insert-restaurantFoodName", async (req, res) => {
+    console.log(req.body);
+    const insertResultR15 = await appService.insertR14(req.body);
+    // const insertResultR12 = await appService.insertR12(req.body);
+    // const insertResultR10 = await appService.insertR10(req.body);
+    if (insertResultR15) {
         res.json({ success: true });
     } else {
         res.status(500).json({ success: false });

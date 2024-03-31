@@ -145,7 +145,6 @@ CREATE TABLE R14(
 
 CREATE TABLE R15(
 	userid			INT,
-	nutritionalReqID	INT,
 	mealName		VARCHAR2(100),
 	mealPlanName	VARCHAR2(100),
 	ingredientName	VARCHAR2(100),
@@ -909,10 +908,10 @@ VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'ranch', 3);
 
 
 
-INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (1, 1, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
-'My Home Cuisine', 'Burger');
+-- INSERT
+-- INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+-- VALUES (1, 1, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
+-- 'My Home Cuisine', 'Burger');
 
 INSERT
 INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
@@ -933,10 +932,9 @@ VALUES (2, 2, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Van
 'My Home Cuisine', 'Burger');
 
 
-
-INSERT
-INTO R15(userid, nutritionalReqID, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
-VALUES(1, 1, 'Steak with asparagus and potatoes', 'regular daily', 'asparagus', 'Grilled Beef Steak', 'Costco', '9151 Bridgeport Rd, Richmond, BC', 'Steak');
+-- INSERT
+-- INTO R15(userid, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
+-- VALUES(1, 'Steak with asparagus and potatoes', 'regular daily', 'asparagus', 'Grilled Beef Steak', 'Costco', '9151 Bridgeport Rd, Richmond, BC', 'Steak');
 
 -- INSERT
 -- INTO R15(userid, nutritionalReqID, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)

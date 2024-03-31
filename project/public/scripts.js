@@ -62,41 +62,146 @@ async function fetchAndDisplayUsers() {
     });
 }
 
-// This function resets or initializes the demotable.
 async function resetDemotable() {
-    const response = await fetch("/initiate-demotable", {
-        method: 'POST'
-    });
-    const responseData = await response.json();
+    const tableElement = document.getElementById('demotable');
+    const tableBody = tableElement.querySelector('tbody');
 
-    if (responseData.success) {
-        const messageElement = document.getElementById('resetResultMsg');
-        messageElement.textContent = "demotable initiated successfully!";
-        fetchTableData();
-    } else {
-        alert("Error initiating table!");
+    const response = await fetch('/initiate-demotable', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+    const demotableContent = responseData.data;
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
     }
+
+    demotableContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
 }
 
+// This function resets or initializes the demotable.
+// async function resetDemotable() {
+//     const response = await fetch("/initiate-demotable", {
+//         method: 'POST'
+//     });
+//     const responseData = await response.json();
+
+//     if (responseData.success) {
+//         const messageElement = document.getElementById('resetResultMsg');
+//         messageElement.textContent = "demotable initiated successfully!";
+//         fetchTableData();
+//     } else {
+//         alert("Error initiating table!");
+//     }
+// }
+
 // Inserts new records into the demotable.
-async function insertDemotable(event) {
+// async function insertDemotable(event) {
+//     event.preventDefault();
+
+//     const idValue = document.getElementById('insertId').value;
+//     const nameValue = document.getElementById('insertName').value;
+//     const text1Value = document.getElementById('insertText1').value;
+//     const text2Value = document.getElementById('insertText2').value;
+
+//     const response = await fetch('/insert-demotable', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             id: idValue,
+//             name: nameValue,
+//             text1: text1Value,
+//             text2: text2Value
+//         })
+//     });
+
+//     const responseData = await response.json();
+//     const messageElement = document.getElementById('insertResultMsg');
+
+//     if (responseData.success) {
+//         messageElement.textContent = "Data inserted successfully!";
+//         fetchTableData();
+//     } else {
+//         messageElement.textContent = "Error inserting data!";
+//     }
+// }
+
+async function insertHomeMadeFoodName(event) {
     event.preventDefault();
+    
+    const userIDValue = document.getElementById('insertUserID').value;
+    const mealNameValue = document.getElementById('insertMealName').value;
+    const mealPlanNameValue = document.getElementById('insertMealPlanName').value;
+    const foodNameValue = document.getElementById('insertFoodName').value;
+    const recipeNameValue = document.getElementById('insertRecipeName').value;
+    const ingredientNameValue = document.getElementById('insertIngredientName').value;
+    const groceryStoreNameValue = document.getElementById('insertGroceryStoreName').value;
+    const groceryStoreAddressValue = document.getElementById('insertGroceryStoreAddress').value;
+    const quantityValue = document.getElementById('insertQuantity').value;
+    const priceValue = document.getElementById('insertPrice').value;
 
-    const idValue = document.getElementById('insertId').value;
-    const nameValue = document.getElementById('insertName').value;
-    const text1Value = document.getElementById('insertText1').value;
-    const text2Value = document.getElementById('insertText2').value;
-
-    const response = await fetch('/insert-demotable', {
+    const response = await fetch('/insert-homeMadeFoodName', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: idValue,
-            name: nameValue,
-            text1: text1Value,
-            text2: text2Value
+            userID: userIDValue,
+            mealName: mealNameValue,
+            mealPlanName: mealPlanNameValue,
+            foodName: foodNameValue,
+            recipeName: recipeNameValue,
+            ingredientName: ingredientNameValue,
+            groceryStoreName: groceryStoreNameValue,
+            groceryStoreAddress: groceryStoreAddressValue,
+            quantity: quantityValue,
+            price: priceValue
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('insertResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Home-made food name inserted successfully!";
+        fetchTableData();
+    } else {
+        messageElement.textContent = "Error inserting home-made food name data!";
+    }
+}
+
+async function insertRestaurantFoodName(event) {
+    event.preventDefault();
+
+    const userIDValue = document.getElementById('insertUserID').value;
+    const mealNameValue = document.getElementById('insertMealName').value;
+    const mealPlanNameValue = document.getElementById('insertMealPlanName').value;
+    const foodNameValue = document.getElementById('insertFoodName').value;
+    const restaurantNameValue = document.getElementById('insertRestaurantName').value;
+    const restaurantAddressValue = document.getElementById('insertRestaurantAddress').value;
+
+    const response = await fetch('/insert-restaurantFoodName', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userID: userIDValue,
+            mealName: mealNameValue,
+            mealPlanNameValue: mealPlanNameValue,
+            foodName: foodNameValue,
+            restaurantName: restaurantNameValue,
+            restaurantAddress: restaurantAddressValue
         })
     });
 
@@ -166,7 +271,8 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
-    document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+    document.getElementById("insertHomeMade").addEventListener("submit", insertHomeMadeFoodName);
+    document.getElementById("insertRestaurant").addEventListener("submit", insertRestaurantFoodName);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
 };
