@@ -96,6 +96,6 @@ textarea::placeholder {
 
 .forms-innerContainer {
     flex: 1;
-    padding: 30px;
+    padding: 24px;
     /* Adjust as needed */
 }

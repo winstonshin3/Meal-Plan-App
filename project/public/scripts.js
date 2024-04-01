@@ -36,63 +36,28 @@ async function checkDbConnection() {
     });
 }
 
-// Fetches data from the demotable and displays it.
-async function fetchAndDisplayUsers() {
-  const tableElement = document.getElementById("demotable");
-  const tableBody = tableElement.querySelector("tbody");
-  const response = await fetch("/demotable", {
-    method: "GET",
-  });
-  const responseData = await response.json();
-  const demotableContent = responseData.data;
-
-  // Always clear old, already fetched data before new fetching process.
-  if (tableBody) {
-    tableBody.innerHTML = "";
-  }
-
-  demotableContent.forEach((user) => {
-    const row = tableBody.insertRow();
-    user.forEach((field, index) => {
-      const cell = row.insertCell(index);
-      cell.textContent = field;
-    });
-  });
-}
-
-async function resetDemotable() {
-  const tableElement = document.getElementById("demotable");
-  const tableBody = tableElement.querySelector("tbody");
-  const response = await fetch("/initiate-demotable", {
-    method: "GET",
-  });
-  const responseData = await response.json();
-  const demotableContent = responseData.data;
-
-  // Always clear old, already fetched data before new fetching process.
-  if (tableBody) {
-    tableBody.innerHTML = "";
-  }
-
-  demotableContent.forEach((user) => {
-    const row = tableBody.insertRow();
-    user.forEach((field, index) => {
-      const cell = row.insertCell(index);
-      cell.textContent = field;
-    });
-  });
-}
-
 async function displayTable(displayTable, fetchTable) {
   const tableElement = document.getElementById(displayTable);
   const tableBody = tableElement.querySelector("tbody");
+  const thead = tableElement.querySelector("thead");
   const response = await fetch(fetchTable, {
     method: "GET",
   });
   const responseData = await response.json();
   const demotableContent = responseData.data;
+  const demotableHeaders = responseData.headers;
 
   // Always clear old, already fetched data before new fetching process.
+  if (thead) {
+    thead.innerHTML = "";
+  }
+  const headerRow = thead.insertRow();
+  demotableHeaders.forEach((header) => {
+    const th = document.createElement("th");
+    th.textContent = header;
+    headerRow.appendChild(th);
+  });
+
   if (tableBody) {
     tableBody.innerHTML = "";
   }
@@ -104,6 +69,54 @@ async function displayTable(displayTable, fetchTable) {
       cell.textContent = field;
     });
   });
+}
+
+async function projectTable(event) {
+  event.preventDefault();
+  const tableNameValue = document.getElementById("resultTableName").value;
+  const columnNameValue = document.getElementById("resultColumnNames").value;
+  const tableElement = document.getElementById("resultsTable");
+  const tableBody = tableElement.querySelector("tbody");
+  const thead = tableElement.querySelector("thead");
+  const response = await fetch("/projectTable", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      tableName: tableNameValue,
+      columnName: columnNameValue,
+    }),
+  });
+  const responseData = await response.json();
+  const demotableContent = responseData.data;
+  const demotableHeaders = columnNameValue.split(",");
+  if (thead) {
+    thead.innerHTML = "";
+  }
+  const headerRow = thead.insertRow();
+  demotableHeaders.forEach((header) => {
+    const th = document.createElement("th");
+    th.textContent = header;
+    headerRow.appendChild(th);
+  });
+  if (tableBody) {
+    tableBody.innerHTML = "";
+  }
+  demotableContent.forEach((user) => {
+    const row = tableBody.insertRow();
+    user.forEach((field, index) => {
+      const cell = row.insertCell(index);
+      cell.textContent = field;
+    });
+  });
+
+  const messageElement = document.getElementById("projectTableMsg");
+  if (responseData.success) {
+    messageElement.textContent = "Table projected successfully!";
+  } else {
+    messageElement.textContent = "Error projecting table!";
+  }
 }
 
 async function insertHomeMadeFoodName(event) {
@@ -152,7 +165,7 @@ async function insertHomeMadeFoodName(event) {
 
   if (responseData.success) {
     messageElement.textContent = "Home-made food name inserted successfully!";
-    fetchTableData();
+    displayTable("resultsTable", "/resultsTableR15");
   } else {
     messageElement.textContent = "Error inserting home-made food name data!";
   }
@@ -194,27 +207,57 @@ async function insertRestaurantFoodName(event) {
 
   if (responseData.success) {
     messageElement.textContent = "Data inserted successfully!";
-    fetchTableData();
+    displayTable("resultsTable", "/resultsTableR14");
   } else {
     messageElement.textContent = "Error inserting data!";
   }
 }
 
-// Updates names in the demotable.
-async function updateNameDemotable(event) {
+async function deleteMealPlan(event) {
   event.preventDefault();
 
-  const oldNameValue = document.getElementById("updateOldName").value;
-  const newNameValue = document.getElementById("updateNewName").value;
+  const userIDValue = document.getElementById("deleteMealPlanUserID").value;
+  const mealPlanNameValue = document.getElementById("deleteMealPlanName").value;
 
-  const response = await fetch("/update-name-demotable", {
+  const response = await fetch("/delete-mealPlan", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      oldName: oldNameValue,
-      newName: newNameValue,
+      userID: userIDValue,
+      mealPlanName: mealPlanNameValue,
+    }),
+  });
+
+  const responseData = await response.json();
+  const messageElement = document.getElementById("deleteResultMsg");
+
+  if (responseData.success) {
+    messageElement.textContent = "Meal plan deleted successfully!";
+    displayTable("resultsTable", "/resultsTableR3");
+  } else {
+    messageElement.textContent = "Error deleting data :(";
+  }
+}
+
+// Updates names in the demotable.
+async function updateUserDemotable(event) {
+  event.preventDefault();
+
+  const columnNameValue = document.getElementById("updateColumn").value;
+  const oldValueValue = document.getElementById("updateOld").value;
+  const newValueValue = document.getElementById("updateNew").value;
+
+  const response = await fetch("/update-r2", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      columnName: columnNameValue,
+      oldValue: oldValueValue,
+      newValue: newValueValue,
     }),
   });
 
@@ -223,7 +266,7 @@ async function updateNameDemotable(event) {
 
   if (responseData.success) {
     messageElement.textContent = "Name updated successfully!";
-    fetchTableData();
+    displayTable("resultsTable", "/resultsTableR2");
   } else {
     messageElement.textContent = "Error updating name!";
   }
@@ -252,10 +295,6 @@ async function countDemotable() {
 // Add or remove event listeners based on the desired functionalities.
 window.onload = function () {
   checkDbConnection();
-  fetchTableData();
-  document
-    .getElementById("resetDemotable")
-    .addEventListener("click", resetDemotable);
   document
     .getElementById("insertHomeMade")
     .addEventListener("submit", insertHomeMadeFoodName);
@@ -263,8 +302,8 @@ window.onload = function () {
     .getElementById("insertRestaurant")
     .addEventListener("submit", insertRestaurantFoodName);
   document
-    .getElementById("updataNameDemotable")
-    .addEventListener("submit", updateNameDemotable);
+    .getElementById("updateUserDemotable")
+    .addEventListener("submit", updateUserDemotable);
   document
     .getElementById("countDemotable")
     .addEventListener("click", countDemotable);
@@ -288,6 +327,22 @@ window.onload = function () {
     .addEventListener("click", function () {
       displayTable("resultsTable", "/resultsTableR10");
     });
+  document
+    .getElementById("resultTableR3")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR3");
+    });
+  document
+    .getElementById("resultTableR2")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR2");
+    });
+  document
+    .getElementById("deleteMealPlan")
+    .addEventListener("click", deleteMealPlan);
+  document
+    .getElementById("projectTable")
+    .addEventListener("submit", projectTable);
 };
 
 // General function to refresh the displayed table data.

@@ -15,69 +15,81 @@ router.get("/check-db-connection", async (req, res) => {
   }
 });
 
-router.get("/demotable", async (req, res) => {
-  // Implementation of the backend
-  const tableContent = await appService.fetchR14FromDb();
-  // Returning result to front end.
-  res.json({ data: tableContent });
-});
-
 router.get("/resultsTableR14", async (req, res) => {
-  // Implementation of the backend
   const tableContent = await appService.fetchR14FromDb();
-  // Returning result to front end.
-  res.json({ data: tableContent });
+  const headers = [
+    "User ID",
+    "Meal Name",
+    "Meal Plan Name",
+    "Restaurant Address",
+    "Restaurant Name",
+    "Food Name",
+  ];
+  res.json({ data: tableContent, headers: headers });
 });
 
 router.get("/resultsTableR15", async (req, res) => {
-  // Implementation of the backend
   const tableContent = await appService.fetchR15FromDb();
-  // Returning result to front end.
-  res.json({ data: tableContent });
+  const headers = [
+    "User ID",
+    "Meal Name",
+    "Meal Plan Name",
+    "Ingredient",
+    "Recipe",
+    "Grocery Store Name",
+    "Grocery Store Address",
+    "Food Name",
+  ];
+  res.json({ data: tableContent, headers: headers });
 });
 
 router.get("/resultsTableR12", async (req, res) => {
-  // Implementation of the backend
   const tableContent = await appService.fetchR12FromDb();
-  // Returning result to front end.
-  res.json({ data: tableContent });
+  const headers = [
+    "Grocery Store Name",
+    "Grocery Store Address",
+    "Ingredient",
+    "Price",
+  ];
+  res.json({ data: tableContent, headers: headers });
 });
 
 router.get("/resultsTableR10", async (req, res) => {
-  // Implementation of the backend
   const tableContent = await appService.fetchR10FromDb();
-  // Returning result to front end.
-  res.json({ data: tableContent });
+  const headers = ["Ingredient", "Recipe", "Quantity"];
+  res.json({ data: tableContent, headers: headers });
 });
 
-router.get("/initiate-demotable", async (req, res) => {
-  // Implementation of the backend
-  const tableContent = await appService.fetchR15FromDb();
-  // Returning result to front end.
-  res.json({ data: tableContent });
+router.get("/resultsTableR3", async (req, res) => {
+  const tableContent = await appService.fetchR3FromDb();
+  const headers = ["User ID", "Meal plan name", "Duration", "Date Created"];
+  res.json({ data: tableContent, headers: headers });
 });
 
-// router.post("/initiate-demotable", async (req, res) => {
-//     const initiateResult = await appService.fetchR14FromDb(); // TODO changed
-//     if (initiateResult) {
-//         res.json({ success: true });
-//     } else {
-//         res.status(500).json({ success: false });
-//     }
-// });
+router.get("/resultsTableR2", async (req, res) => {
+  const tableContent = await appService.fetchR2FromDb();
+  const headers = [
+    "User ID",
+    "User Name",
+    "User Address",
+    "Budget",
+    "Phone Number",
+    "Diet Plan",
+  ];
+  res.json({ data: tableContent, headers: headers });
+});
 
-// router.post("/insert-demotable", async (req, res) => {
-//     const { id, name, text1, text2 } = req.body;
-//     const insertResult = await appService.insertDemotable(id, name, text1, text2);
-//     if (insertResult) {
-//         res.json({ success: true });
-//     } else {
-//         res.status(500).json({ success: false });
-//     }
-// });
+router.post("/projectTable", async (req, res) => {
+  const tableContent = await appService.projectTableFromDb(req.body);
+  if (!(tableContent.length === 0)) {
+    res.json({ data: tableContent, success: true });
+  } else {
+    res.json({ data: tableContent, success: false });
+  }
+});
 
 router.post("/insert-homeMadeFoodName", async (req, res) => {
-  const insertResultR15 = await appService.insertR15(req.body);
+  const insertResultR15 = await appService.insertR15s(req.body);
   const insertResultR12 = await appService.insertR12(req.body);
   const insertResultR10 = await appService.insertR10(req.body);
   if (insertResultR15 && insertResultR12 && insertResultR10) {
@@ -93,8 +105,6 @@ router.post("/insert-homeMadeFoodName", async (req, res) => {
 
 router.post("/insert-restaurantFoodName", async (req, res) => {
   const insertResultR15 = await appService.insertR14(req.body);
-  // const insertResultR12 = await appService.insertR12(req.body);
-  // const insertResultR10 = await appService.insertR10(req.body);
   if (insertResultR15) {
     res.json({ success: true });
   } else {
@@ -102,9 +112,17 @@ router.post("/insert-restaurantFoodName", async (req, res) => {
   }
 });
 
-router.post("/update-name-demotable", async (req, res) => {
-  const { oldName, newName } = req.body;
-  const updateResult = await appService.updateNameDemotable(oldName, newName);
+router.post("/delete-mealPlan", async (req, res) => {
+  const insertResultR15 = await appService.deleteR3(req.body);
+  if (insertResultR15) {
+    res.json({ success: true });
+  } else {
+    res.status(500).json({ success: false });
+  }
+});
+
+router.post("/update-r2", async (req, res) => {
+  const updateResult = await appService.updateR2(req.body);
   if (updateResult) {
     res.json({ success: true });
   } else {

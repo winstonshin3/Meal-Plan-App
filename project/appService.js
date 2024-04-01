@@ -108,41 +108,35 @@ async function fetchR10FromDb() {
   });
 }
 
-// async function initiateDemotable() {
-//     return await withOracleDB(async (connection) => {
-//         try {
-//             await connection.execute(`DROP TABLE DEMOTABLE`);
-//         } catch(err) {
-//             console.log('Table might not exist, proceeding to create...');
-//         }
+async function fetchR3FromDb() {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute("SELECT * FROM R3");
+    return result.rows;
+  }).catch(() => {
+    return [];
+  });
+}
 
-//         const result = await connection.execute(`
-//             CREATE TABLE DEMOTABLE (
-//                 id NUMBER PRIMARY KEY,
-//                 name VARCHAR2(20),
-//                 text1 VARCHAR2(20),
-//                 text2 VARCHAR2(20)
-//             )
-//         `);
-//         return true;
-//     }).catch(() => {
-//         return false;
-//     });
-// }
+async function fetchR2FromDb() {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute("SELECT * FROM R2");
+    return result.rows;
+  }).catch(() => {
+    return [];
+  });
+}
 
-// async function insertDemotable(id, name, text1, text2) {
-//     return await withOracleDB(async (connection) => {
-//         const result = await connection.execute(
-//             `INSERT INTO DEMOTABLE (id, name, text1, text2) VALUES (:id, :name, :text1, :text2)`,
-//             [id, name, text1, text2],
-//             { autoCommit: true }
-//         );
-
-//         return result.rowsAffected && result.rowsAffected > 0;
-//     }).catch(() => {
-//         return false;
-//     });
-// }
+async function projectTableFromDb(body) {
+  const { tableName, columnName } = body;
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `SELECT ${columnName} FROM ${tableName}`
+    );
+    return result.rows;
+  }).catch(() => {
+    return [];
+  });
+}
 
 async function insertR15(body) {
   const {
@@ -245,14 +239,32 @@ async function insertR10(body) {
   });
 }
 
-async function updateNameDemotable(oldName, newName) {
+async function deleteR3(body) {
+  const { userID, mealPlanName } = body;
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      `UPDATE DEMOTABLE SET name=:newName where name=:oldName`,
-      [newName, oldName],
+      `DELETE FROM R3
+        WHERE userID = :userID and mealPlanName = :mealPlanName`,
+      {
+        userID,
+        mealPlanName,
+      },
       { autoCommit: true }
     );
+    return result.rowsAffected && result.rowsAffected > 0;
+  }).catch(() => {
+    return false;
+  });
+}
 
+async function updateR2(body) {
+  const { columnName, oldValue, newValue } = body;
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      `UPDATE R2 SET ${columnName} = :newValue WHERE ${columnName} = :oldValue`,
+      { oldValue, newValue }, // Bind variables
+      { autoCommit: true }
+    );
     return result.rowsAffected && result.rowsAffected > 0;
   }).catch(() => {
     return false;
@@ -274,10 +286,14 @@ module.exports = {
   fetchR15FromDb,
   fetchR12FromDb,
   fetchR10FromDb,
+  fetchR3FromDb,
+  fetchR2FromDb,
+  projectTableFromDb,
   insertR15,
   insertR14,
   insertR12,
   insertR10,
-  updateNameDemotable,
+  deleteR3,
+  updateR2,
   countDemotable,
 };
