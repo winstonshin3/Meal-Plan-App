@@ -90,6 +90,24 @@ async function fetchR15FromDb() {
   });
 }
 
+async function fetchR12FromDb() {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute("SELECT * FROM R12");
+    return result.rows;
+  }).catch(() => {
+    return [];
+  });
+}
+
+async function fetchR10FromDb() {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute("SELECT * FROM R10");
+    return result.rows;
+  }).catch(() => {
+    return [];
+  });
+}
+
 // async function initiateDemotable() {
 //     return await withOracleDB(async (connection) => {
 //         try {
@@ -160,7 +178,6 @@ async function insertR15(body) {
 }
 
 async function insertR14(body) {
-  console.log(body);
   const {
     userID,
     mealName,
@@ -190,7 +207,6 @@ async function insertR14(body) {
 }
 
 async function insertR12(body) {
-  console.log(body);
   const { groceryStoreName, groceryStoreAddress, ingredientName, price } = body;
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
@@ -211,7 +227,6 @@ async function insertR12(body) {
 }
 
 async function insertR10(body) {
-  console.log(body);
   const { ingredientName, recipeName, quantity } = body;
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
@@ -257,6 +272,8 @@ module.exports = {
   testOracleConnection,
   fetchR14FromDb,
   fetchR15FromDb,
+  fetchR12FromDb,
+  fetchR10FromDb,
   insertR15,
   insertR14,
   insertR12,

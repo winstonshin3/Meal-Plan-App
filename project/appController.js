@@ -22,9 +22,37 @@ router.get("/demotable", async (req, res) => {
   res.json({ data: tableContent });
 });
 
-router.get("/initiate-demotable", async (req, res) => {
+router.get("/resultsTableR14", async (req, res) => {
   // Implementation of the backend
   const tableContent = await appService.fetchR14FromDb();
+  // Returning result to front end.
+  res.json({ data: tableContent });
+});
+
+router.get("/resultsTableR15", async (req, res) => {
+  // Implementation of the backend
+  const tableContent = await appService.fetchR15FromDb();
+  // Returning result to front end.
+  res.json({ data: tableContent });
+});
+
+router.get("/resultsTableR12", async (req, res) => {
+  // Implementation of the backend
+  const tableContent = await appService.fetchR12FromDb();
+  // Returning result to front end.
+  res.json({ data: tableContent });
+});
+
+router.get("/resultsTableR10", async (req, res) => {
+  // Implementation of the backend
+  const tableContent = await appService.fetchR10FromDb();
+  // Returning result to front end.
+  res.json({ data: tableContent });
+});
+
+router.get("/initiate-demotable", async (req, res) => {
+  // Implementation of the backend
+  const tableContent = await appService.fetchR15FromDb();
   // Returning result to front end.
   res.json({ data: tableContent });
 });

@@ -83,6 +83,29 @@ async function resetDemotable() {
   });
 }
 
+async function displayTable(displayTable, fetchTable) {
+  const tableElement = document.getElementById(displayTable);
+  const tableBody = tableElement.querySelector("tbody");
+  const response = await fetch(fetchTable, {
+    method: "GET",
+  });
+  const responseData = await response.json();
+  const demotableContent = responseData.data;
+
+  // Always clear old, already fetched data before new fetching process.
+  if (tableBody) {
+    tableBody.innerHTML = "";
+  }
+
+  demotableContent.forEach((user) => {
+    const row = tableBody.insertRow();
+    user.forEach((field, index) => {
+      const cell = row.insertCell(index);
+      cell.textContent = field;
+    });
+  });
+}
+
 async function insertHomeMadeFoodName(event) {
   event.preventDefault();
 
@@ -245,6 +268,26 @@ window.onload = function () {
   document
     .getElementById("countDemotable")
     .addEventListener("click", countDemotable);
+  document
+    .getElementById("resultTableR14")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR14");
+    });
+  document
+    .getElementById("resultTableR15")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR15");
+    });
+  document
+    .getElementById("resultTableR12")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR12");
+    });
+  document
+    .getElementById("resultTableR10")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR10");
+    });
 };
 
 // General function to refresh the displayed table data.
