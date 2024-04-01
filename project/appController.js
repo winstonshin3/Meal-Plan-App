@@ -89,7 +89,7 @@ router.post("/projectTable", async (req, res) => {
 });
 
 router.post("/insert-homeMadeFoodName", async (req, res) => {
-  const insertResultR15 = await appService.insertR15s(req.body);
+  const insertResultR15 = await appService.insertR15(req.body);
   const insertResultR12 = await appService.insertR12(req.body);
   const insertResultR10 = await appService.insertR10(req.body);
   if (insertResultR15 && insertResultR12 && insertResultR10) {
