@@ -1,80 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
-    <!-- <link rel="stylesheet" href="styles.css">   -->
+    <link rel="stylesheet" href="styles.css">
 
     <title>Database Application</title>
 </head>
+
 <body>
     <!-- ===================================================================================== -->
     <!-- Display the current status of the database connection. 
          !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
          -->
-    <h1>Database Connection Status: 
+    <h1>Database Connection Status:
         <!-- An in-line placeholder to display connection status. -->
         <span id="dbStatus"> </span>
         <!-- A loading GIF, will be hided once get the status. -->
         <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
     </h1>
 
-    <br><hr><br> <!-- ========================================================================= -->
+    <br>
+    <hr><br> <!-- ========================================================================= -->
 
     <!-- Show 'Demotable'. 
         Data will be fetched and inserted here dynamically using JavaScript. -->
-    <h2>Show Demotable</h2>
-    <table id="demotable" border="1">
+    <h2>Display Table</h2>
+    <p>Click on any of the buttons below to see that table's contents! Any button clicks will also be shown here.</p>
+    <button id="resultTableR14"> R14 </button>
+    <button id="resultTableR15"> R15 </button>
+    <button id="resultTableR12"> R12 </button>
+    <button id="resultTableR10"> R10 </button>
+    <button id="resultTableR3"> R3 </button>
+    <button id="resultTableR2"> R2 </button>
+    <br><br>
+    <table id="resultsTable" border="1">
         <thead>
             <tr>
-                <!--Table head, need to be adjusted accordingly to align with your own.-->
-                <th>ID</th>
-                <th>Name</th>
                 <th>Text1</th>
                 <th>Text2</th>
+                <th>Text3</th>
+                <th>Text4</th>
             </tr>
         </thead>
         <tbody>
         </tbody>
     </table>
-
-    <br><hr><br> <!-- ========================================================================= -->
-
-    <h2>Reset Demotable</h2>
-    <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
-    <button id="resetDemotable"> reset </button> <br>
-    <!-- A placeholder to display messages related to the reset operation. -->
-    <div id="resetResultMsg"></div>
-
-    <br><hr><br> <!-- ========================================================================= -->
-
-    <h2> Insert Values into DemoTable </h2>
-    <form id="insertDemotable">
-        ID: <input type="number" id="insertId" placeholder="Enter ID" required> <br><br>
-        Name: <input type="text" id="insertName" placeholder="Enter Name" maxlength="20"> <br><br>
-        Text1: <input type="text" id="insertText1" placeholder="Enter ID" required> <br><br>
-        Text2: <input type="text" id="insertText2" placeholder="Enter Name" maxlength="20"> <br><br>
-        <button type="submit"> insert </button> <br>
+    <br>
+    <h2>Project Table</h2>
+    <p>Try typing "R2" and "userid, uname" into table name and column names respectively and anything in conditional.
+    </p>
+    <form id="projectTable">
+        Table Name: <input type="text" id="resultTableName" placeholder="Enter Table Name" required>
+        Column Names: <input type="text" id="resultColumnNames" placeholder="Enter Column Names" required>
+        Conditional: <input type="text" id="resultConditional" placeholder="Not Implemented" required>
+        <button type="submit"> filter </button>
     </form>
+    <div id="projectTableMsg"></div>
+
+    <br>
+    <hr><br> <!-- ========================================================================= -->
+
+
+    <div>
+        <p>Must submit an existing value for every attribute except quantity and price.</p>
+        <div class="forms-container">
+            <div class="forms-innerContainer">
+                <h2> Add Homemade Food </h2>
+                <form id="insertHomeMade">
+                    userID: <input type="number" id="insertUserID1" placeholder="Enter User ID" required>
+                    mealName: <input type="text" id="insertMealName1" placeholder="Enter Meal Name" required>
+                    mealPlanName: <input type="text" id="insertMealPlanName1" placeholder="Enter Meal Plan Name"
+                        required>
+                    foodName: <input type="text" id="insertFoodName1" placeholder="Enter Food Name" required>
+                    recipeName: <input type="text" id="insertRecipeName" placeholder="Enter Recipe Name" required>
+                    ingredientName: <input type="text" id="insertIngredientName" placeholder="Enter Name" required>
+                    groceryStoreName: <input type="text" id="insertGroceryStoreName" placeholder="Enter ID" required>
+                    groceryStoreAddress: <input type="text" id="insertGroceryStoreAddress" placeholder="Enter Name"
+                        required>
+                    quantity: <input type="text" id="insertQuantity" placeholder="Enter Quantity" required>
+                    price: <input type="text" id="insertPrice" placeholder="Enter Price" required>
+                    <button type="submit"> insert </button>
+                </form>
+            </div>
+            <div class="forms-innerContainer">
+                <h2> Add Restaurant Food </h2>
+                <form id="insertRestaurant">
+                    userID: <input type="number" id="insertUserID2" placeholder="Enter User ID" required>
+                    mealName: <input type="text" id="insertMealName2" placeholder="Enter Meal Name" required>
+                    mealPlanName: <input type="text" id="insertMealPlanName2" placeholder="Enter Meal Plan Name"
+                        required>
+                    foodName: <input type="text" id="insertFoodName2" placeholder="Enter Food Name" required>
+                    restaurantName: <input type="text" id="insertRestaurantName" placeholder="Enter Restaurant Name"
+                        required>
+                    restaurantAddress: <input type="text" id="insertRestaurantAddress"
+                        placeholder="Enter Restaurant Address" required>
+                    <button type="submit"> insert </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div id="insertResultMsg"></div>
 
-    <br><hr><br> <!-- ========================================================================= -->
+    <br>
+    <hr><br> <!-- ========================================================================= -->
+    <h2>Delete Tuples in R3</h2>
+    <p>DELETE ON CASCADE is shown in R14 and R15!</p>
+    <div>
+        <form id="deleteMealPlan">
+            userID: <input type="number" id="deleteMealPlanUserID" placeholder="Enter User ID" required>
+            mealPlanName: <input type="text" id="deleteMealPlanName" placeholder="Enter Meal Plan Name" required>
+            <button type="submit"> delete </button>
+        </form>
+    </div>
+    <div id="deleteResultMsg"></div>
+    <br>
+    <hr><br> <!-- ========================================================================= -->
 
-    <h2>Update Name in DemoTable</h2>
-    <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
-    <form id="updataNameDemotable">
-        Old Name: <input type="text" id="updateOldName" placeholder="Enter Old Name" required> <br><br>
-        New Name: <input type="text" id="updateNewName" placeholder="Enter New Name" maxlength="20"> <br><br>
-
+    <h2>Update Attributes in R2</h2>
+    <p>If you try to update a primary key, it will throw an error!</p>
+    <form id="updateUserDemotable">
+        Column Name: <input type="text" id="updateColumn" placeholder="Enter Column Name" required>
+        Old Value: <input type="text" id="updateOld" placeholder="Enter Old Value" required>
+        New Value: <input type="text" id="updateNew" placeholder="Enter New Value" required>
         <button type="submit"> update </button> <br>
     </form>
     <!-- A placeholder to display messages related to the update operation. -->
     <div id="updateNameResultMsg"></div>
 
-    <br><hr><br> <!-- ========================================================================= -->
+    <br>
+    <hr><br> <!-- ========================================================================= -->
 
     <h2>Count the Tuples in DemoTable</h2>
     <button id="countDemotable"> count </button> <br><br>
@@ -85,4 +145,5 @@
     <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
     <script src="scripts.js"></script>
 </body>
+
 </html>
