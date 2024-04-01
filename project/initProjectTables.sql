@@ -114,7 +114,7 @@ CREATE TABLE R12(
 	groceryStoreName	VARCHAR2(100),	
 	groceryStoreAddress	VARCHAR2(100),
 	ingredientName	VARCHAR2(100),
-	sellsCost		INT,
+	price INT,
 	PRIMARY KEY(groceryStoreName, groceryStoreAddress, ingredientName),
 	FOREIGN KEY(groceryStoreName, groceryStoreAddress) REFERENCES R11(groceryStoreName, groceryStoreAddress) 
 		ON DELETE CASCADE,
@@ -124,13 +124,12 @@ CREATE TABLE R12(
 
 CREATE TABLE R14(
 	userid			INT,
-	nutritionalReqID	INT,
 	mealName		VARCHAR2(100),
 	mealPlanName	VARCHAR2(100),
 	restaurantAddress	VARCHAR2(100),
 	restaurantName	VARCHAR2(100),
 	foodName		VARCHAR2(100),
-	PRIMARY KEY (userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName),
+	PRIMARY KEY (userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName),
 	FOREIGN KEY(userid) REFERENCES R2(userid)
 		ON DELETE CASCADE,
 	FOREIGN KEY(mealName) REFERENCES R4(mealName)
@@ -860,28 +859,28 @@ VALUES ('Safeway', '2733 W Broadway, Vancouver, BC', '7:00-23:00', 4.1);
 
 
 
-INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
-VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'asparagus', 3);
+-- INSERT
+-- INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+-- VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'asparagus', 3);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Costco', '605 Expo Blvd, Vancouver, BC', 'greek yogurt', 5);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Save On Foods', '5945 Berton Ave, Vancouver, BC', 'steak', 20);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Real Canadian Superstore', '3185 Grandview Hwy, Vancouver, BC', 'potato', 1);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Safeway', '2733 W Broadway, Vancouver, BC', 'lettuce', 2);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'ranch', 3);
 
 
@@ -913,22 +912,23 @@ VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'ranch', 3);
 -- VALUES (1, 1, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
 -- 'My Home Cuisine', 'Burger');
 
-INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (1, 1, 'Beef stir fry noodles', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 'My Home Cuisine', 'Beef noodle stir fry');
+-- INSERT
+-- INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+-- VALUES (1, 'Beef stir fry noodles', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 'My Home Cuisine', 'Beef noodle stir fry');
 
 INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (1, 1, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (1,'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
 'My Home Cuisine', 'French fries');
 
 INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (2, 2, 'Beef stir fry noodles', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 'My Home Cuisine', 'Beef noodle stir fry');
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (2, 'Beef stir fry noodles', 'regular daily', 
+'5728 University Blvd B9, Vancouver, BC', 'My Home Cuisine', 'Beef noodle stir fry');
 
 INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (2, 2, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (2, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
 'My Home Cuisine', 'Burger');
 
 

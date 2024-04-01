@@ -90,13 +90,12 @@ textarea::placeholder {
 
 .forms-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    flex-direction: row;
     /* Adjust as needed */
 }
 
 .forms-innerContainer {
-    display: flex;
-    justify-content: space-between;
+    flex: 1;
+    padding: 30px;
     /* Adjust as needed */
 }

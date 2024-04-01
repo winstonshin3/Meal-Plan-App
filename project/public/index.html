@@ -58,7 +58,7 @@
     <hr><br> <!-- ========================================================================= -->
 
 
-    <div class="forms-container">
+    <div>
         <!-- <form id="insertFoodName">
             userID: <input type="number" id="insertUserID" placeholder="Enter User ID" required> <br><br>
             mealName: <input type="text" id="insertMealName" placeholder="Enter Meal Name" maxlength="20"> <br><br>
@@ -66,43 +66,38 @@
             <br><br>
             foodName: <input type="text" id="insertFoodName" placeholder="Enter Food Name" maxlength="20"> <br><br>
         </form> -->
-        <div class="forms-innerContainer">
-            <div>
-                <h2> Insert Values into DemoTable </h2>
+        <div class="forms-container">
+            <div class="forms-innerContainer">
+                <h2> Add Homemade Food </h2>
                 <form id="insertHomeMade">
-
-
+                    userID: <input type="number" id="insertUserID1" placeholder="Enter User ID" required>
+                    mealName: <input type="text" id="insertMealName1" placeholder="Enter Meal Name" required>
+                    mealPlanName: <input type="text" id="insertMealPlanName1" placeholder="Enter Meal Plan Name"
+                        required>
+                    foodName: <input type="text" id="insertFoodName1" placeholder="Enter Food Name" required>
                     recipeName: <input type="text" id="insertRecipeName" placeholder="Enter Recipe Name" required>
-                    <br><br>
-                    ingredientName: <input type="text" id="insertIngredientName" placeholder="Enter Name"
-                        maxlength="20">
-                    <br><br>
+                    ingredientName: <input type="text" id="insertIngredientName" placeholder="Enter Name" required>
                     groceryStoreName: <input type="text" id="insertGroceryStoreName" placeholder="Enter ID" required>
-                    <br><br>
                     groceryStoreAddress: <input type="text" id="insertGroceryStoreAddress" placeholder="Enter Name"
-                        maxlength="100"> <br><br>
+                        required>
                     quantity: <input type="text" id="insertQuantity" placeholder="Enter Quantity" required>
-                    <br><br>
-                    price: <input type="text" id="insertPrice" placeholder="Enter Price" maxlength="20"> <br><br>
-                    <button type="submit"> insert </button> <br>
+                    price: <input type="text" id="insertPrice" placeholder="Enter Price" required>
+                    <button type="submit"> insert </button>
                 </form>
             </div>
-            <div>
-                <h2> Insert Values into DemoTable2 </h2>
+            <div class="forms-innerContainer">
+                <h2> Add Restaurant Food </h2>
                 <form id="insertRestaurant">
-                    userID: <input type="number" id="insertUserID" placeholder="Enter User ID" required> <br><br>
-                    mealName: <input type="text" id="insertMealName" placeholder="Enter Meal Name" maxlength="20">
-                    <br><br>
-                    mealPlanName: <input type="text" id="insertMealPlanName" placeholder="Enter Meal Plan Name"
-                        maxlength="100">
-                    <br><br>
-                    foodName: <input type="text" id="insertFoodName" placeholder="Enter Food Name" maxlength="20">
-                    <br><br>
-                    restaurantName: <input type="number" id="insertRestaurantName" placeholder="Enter Restaurant Name"
-                        required> <br><br>
+                    userID: <input type="number" id="insertUserID2" placeholder="Enter User ID" required>
+                    mealName: <input type="text" id="insertMealName2" placeholder="Enter Meal Name" required>
+                    mealPlanName: <input type="text" id="insertMealPlanName2" placeholder="Enter Meal Plan Name"
+                        required>
+                    foodName: <input type="text" id="insertFoodName2" placeholder="Enter Food Name" required>
+                    restaurantName: <input type="text" id="insertRestaurantName" placeholder="Enter Restaurant Name"
+                        required>
                     restaurantAddress: <input type="text" id="insertRestaurantAddress"
-                        placeholder="Enter Restaurant Address" maxlength="20"> <br><br>
-                    <button type="submit"> insert </button> <br>
+                        placeholder="Enter Restaurant Address" required>
+                    <button type="submit"> insert </button>
                 </form>
             </div>
         </div>
