@@ -12,12 +12,13 @@
  * 
  */
 
-
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
     const statusElem = document.getElementById('dbStatus');
     const loadingGifElem = document.getElementById('loadingGif');
 
+    console.log("check db conn");
+    
     const response = await fetch('/check-db-connection', {
         method: "GET"
     });
@@ -84,8 +85,6 @@ async function insertDemotable(event) {
 
     const idValue = document.getElementById('insertId').value;
     const nameValue = document.getElementById('insertName').value;
-    const text1Value = document.getElementById('insertText1').value;
-    const text2Value = document.getElementById('insertText2').value;
 
     const response = await fetch('/insert-demotable', {
         method: 'POST',
@@ -94,9 +93,7 @@ async function insertDemotable(event) {
         },
         body: JSON.stringify({
             id: idValue,
-            name: nameValue,
-            text1: text1Value,
-            text2: text2Value
+            name: nameValue
         })
     });
 
@@ -158,17 +155,79 @@ async function countDemotable() {
     }
 }
 
+async function getGroupingAggrResult(event) {
+    console.log("Enter function.")
+    event.preventDefault();
+
+    const tableElement = document.getElementById('demotable');
+    const tableHeader = document.getElementById('demotable-header');
+    const tableBody = tableElement.querySelector('tbody');
+    const userIdValue = document.getElementById('userIdGroupingInput').value;
+
+    console.log("User: ", userIdValue);
+
+    const response = await fetch('/getMaxCaloriesInRestaurantMealPlan', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userId: userIdValue
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('groupingAggrResult');
+
+    console.log("Group aggreg.", responseData);
+
+    if (responseData.success) {
+        messageElement.textContent = "Grouping with aggregation executed successfully!";
+        // fetchTableData();
+
+        if (tableBody) {
+            tableBody.innerHTML = '';
+        }
+
+        if (tableHeader) {
+            tableHeader.innerHTML = '';
+            const row = tableHeader.insertRow();
+            const metadata = responseData.data.metaData;
+            
+            for (let i = 0; i < metadata.length; i++) {
+                const headerCell = document.createElement('th');
+                headerCell.textContent = metadata[i]['name'];
+                row.appendChild(headerCell);
+            }
+        }
+    
+        responseData.data.rows.forEach(data => {
+            const row = tableBody.insertRow();
+            data.forEach((field, index) => {
+                const cell = row.insertCell(index);
+                cell.textContent = field;
+            });
+        });
+
+    } else {
+        messageElement.textContent = "Error executing the grouping with aggregation!";
+    }
+}
+
+
+
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
 window.onload = function() {
     checkDbConnection();
-    fetchTableData();
+    // fetchTableData();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    document.getElementById("groupingAggrForm").addEventListener("submit", getGroupingAggrResult);
 };
 
 // General function to refresh the displayed table data. 

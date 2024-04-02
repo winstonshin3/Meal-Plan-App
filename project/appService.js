@@ -145,11 +145,28 @@ async function countDemotable() {
     });
 }
 
+//find the max calories within each meal plan at restaurants
+async function getGroupMaxTotalCaloriesQuery(userId) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            // 'SELECT DISTINCT mealPlanName, COUNT(DISTINCT mealName) FROM R14, R15 WHERE R14.userid = :userId GROUP BY R14.mealPlanName',
+            'SELECT mealPlanName AS "Meal Plan Name", MAX(totalCalories) AS "Max Meal Calories" FROM (SELECT mealPlanName, mealName, SUM(nutritionalFactTotalCalories) as totalCalories FROM R14 INNER JOIN R6 ON R14.foodName = R6.foodName WHERE R14.userId = :userId GROUP BY mealPlanName, mealName) GROUP BY mealPlanName',
+            [userId],
+            { autoCommit: true}
+        );
+        console.log("Group meal plan max calories at restaurants: ", result);
+        return result;
+    }).catch(() => {
+        return [];
+    });
+}
+
 module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,
     initiateDemotable, 
     insertDemotable, 
     updateNameDemotable, 
-    countDemotable
+    countDemotable,
+    getGroupMaxTotalCaloriesQuery
 };

@@ -66,5 +66,21 @@ router.get('/count-demotable', async (req, res) => {
     }
 });
 
+router.post("/getMaxCaloriesInRestaurantMealPlan", async (req, res) => {
+    const userId = req.body.userId;
+    const response = await appService.getGroupMaxTotalCaloriesQuery(userId);
+    if (response) {
+        res.json({ 
+            success: true,
+            data: response
+        });
+    } else {
+        res.status(500).json({ 
+            success: false ,
+            message: "Failed to get result."
+        });
+    }
+});
+
 
 module.exports = router;
