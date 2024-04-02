@@ -57,4 +57,3 @@ for PORT in $(seq $START $END); do
         break
     fi
 done
-
