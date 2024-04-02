@@ -183,8 +183,7 @@ async function getGroupingAggrResult(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Grouping with aggregation executed successfully!";
-        // fetchTableData();
-
+        
         if (tableBody) {
             tableBody.innerHTML = '';
         }
