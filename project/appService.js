@@ -320,13 +320,14 @@ async function AggregateHaving(amount) {
     });
 }
 
-async function aggregateGroupBy(body) {
+async function aggregateGroupBy() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            //TODO
+            'SELECT MAX(avg_diningTime) FROM (SELECT mealCuisine, AVG(diningTime) AS avg_diningTime FROM R4 GROUP BY mealCuisine)'
         );
+        //console.log(result.rows[0][0]);
         return result.rows;
-    }).catch((err) => {
+    }).catch(() => {
         return [];
     });
 }

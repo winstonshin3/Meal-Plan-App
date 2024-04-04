@@ -425,6 +425,31 @@ async function displayStoreData(responseData) {
     })
 }
 
+async function displayMaxAvg() {
+  const tableElement = document.getElementById("maxAverage");
+  const tableBody = tableElement.querySelector("tbody")
+
+  const response = await fetch("/aggregate-groupby",{
+    method: "GET"
+  })
+
+  const responseData = await response.json();
+    //console.log("something should be here as well");
+  const maxAverageContent = responseData.data;
+    //console.log(joinedTableContent);
+  if(tableBody) {
+        tableBody.innerHTML = "";
+  }
+
+  maxAverageContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    })
+}
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
@@ -479,10 +504,11 @@ window.onload = function () {
     .getElementById("projectTable")
     .addEventListener("submit", projectTable);
     
-  document.getElementById("groupingAggrForm").addEventListener("submit", getGroupingAggrResult);
+  document.getElementById("groupingAggrForm").addEventListener("click", getGroupingAggrResult);
 
   document.getElementById("getJoined").addEventListener("click", DisplayJoined);
   document.getElementById("insertStoreTable").addEventListener("submit", findGreaterPrice);
+  document.getElementById("getMaxAverage").addEventListener("click", displayMaxAvg);
 };
 
 // General function to refresh the displayed table data.

@@ -102,13 +102,10 @@ router.post("/aggregate-having", async (req, res) => {
     }
 });
 
-router.post("/aggregate-groupby", (req, res) => {
-    const body = req.body;
-    appService.aggregateGroupBy(body).then((result) => {
-        res.status(200).json({ data: result });
-    }).catch((err) => {
-        res.status(500).json({ error: err.toString() });
-    });
+router.get("/aggregate-groupby", async (req, res) => {
+    const maxTime = await appService.aggregateGroupBy();
+    
+    res.json({data: maxTime});
 })
 
 router.get("/resultsTableR2", async (req, res) => {
