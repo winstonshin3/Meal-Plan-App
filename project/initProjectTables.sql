@@ -114,7 +114,7 @@ CREATE TABLE R12(
 	groceryStoreName	VARCHAR2(100),	
 	groceryStoreAddress	VARCHAR2(100),
 	ingredientName	VARCHAR2(100),
-	sellsCost		INT,
+	price INT,
 	PRIMARY KEY(groceryStoreName, groceryStoreAddress, ingredientName),
 	FOREIGN KEY(groceryStoreName, groceryStoreAddress) REFERENCES R11(groceryStoreName, groceryStoreAddress) 
 		ON DELETE CASCADE,
@@ -124,13 +124,12 @@ CREATE TABLE R12(
 
 CREATE TABLE R14(
 	userid			INT,
-	nutritionalReqID	INT,
 	mealName		VARCHAR2(100),
 	mealPlanName	VARCHAR2(100),
 	restaurantAddress	VARCHAR2(100),
 	restaurantName	VARCHAR2(100),
 	foodName		VARCHAR2(100),
-	PRIMARY KEY (userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName),
+	PRIMARY KEY (userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName),
 	FOREIGN KEY(userid) REFERENCES R2(userid)
 		ON DELETE CASCADE,
 	FOREIGN KEY(mealName) REFERENCES R4(mealName)
@@ -145,7 +144,6 @@ CREATE TABLE R14(
 
 CREATE TABLE R15(
 	userid			INT,
-	nutritionalReqID	INT,
 	mealName		VARCHAR2(100),
 	mealPlanName	VARCHAR2(100),
 	ingredientName	VARCHAR2(100),
@@ -244,6 +242,14 @@ VALUES(8, 'Cindy', '8763 Sexsmith drive', 300, '236-856-7975', 80);
 INSERT
 INTO R3(userid, mealPlanName, duration, mealPlanDate)
 VALUES(1, 'regular daily', 49, '2023-06-07');
+
+INSERT
+INTO R3(userid, mealPlanName, duration, mealPlanDate)
+VALUES(1, 'bulking', 49, '2023-06-08');
+
+INSERT
+INTO R3(userid, mealPlanName, duration, mealPlanDate)
+VALUES(1, 'low fat', 49, '2023-06-09');
 
 INSERT
 INTO R3(userid, mealPlanName, duration, mealPlanDate)
@@ -368,15 +374,15 @@ VALUES('Garlic bread', 1, 1, 1, 3, 'Garlic bread');
 
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
-VALUES('Steak', 1, 1, 1, 20, 'Steak');
+VALUES('Steak', 1, 1, 1, 500, 'Steak');
 
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
-VALUES('Asparagus', 1, 1, 1, 3, 'Asparagus');
+VALUES('Asparagus', 1, 1, 1, 50, 'Asparagus');
 
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
-VALUES('Baked potatoes', 1, 1, 1, 4, 'Baked potatoes'); 
+VALUES('Baked potatoes', 1, 1, 1, 75, 'Baked potatoes'); 
 
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
@@ -396,7 +402,7 @@ VALUES('Roast oats', 1, 1, 1, 2,  'Roast oats');
 
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
-VALUES('Beef noodle stir fry', 1, 1, 1, 10, 'Beef noodle stir fry');
+VALUES('Beef noodle stir fry', 1, 1, 1, 350, 'Beef noodle stir fry');
 
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
@@ -408,11 +414,11 @@ VALUES('Pickled radish', 1, 1, 1, 2, 'Pickled radish');
 
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
-VALUES('Burger', 1, 1, 1, 6, 'Burger');
+VALUES('Burger', 1, 1, 1, 450, 'Burger');
 
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
-VALUES('French fries', 1, 1, 1, 4, 'French fries');
+VALUES('French fries', 1, 1, 1, 200, 'French fries');
 
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
@@ -482,6 +488,7 @@ VALUES('Korean fried chicken', 1, 1, 1, 19, 'Korean fried chicken');
 INSERT
 INTO R6(nutritionalFactName, nutritionalFactTotalProteins, nutritionalFactTotalSugars, nutritionalFactTotalFats, nutritionalFactTotalCalories, foodName)
 VALUES('Beer', 1, 1, 1, 4, 'Beer');
+
 
 INSERT
 INTO R5(foodName, foodCost, nutritionalFactName, discount, timeRequired)
@@ -647,7 +654,7 @@ VALUES('Kimchi fried rice Recipe', 'Heat up skillet, stir fry kimchi until fragr
 
 INSERT
 INTO R7(recipeName, instructions, foodName)
-VALUES('Tuna sandwich recipe', 'Toast two slices of preferred bread, pour can of tuna, mayonnaise, celery, onion, relish and roast garlic into a bowl and mix well. spread mix between toasted bread and serve', 'Tuna sandwich');
+VALUES('Tuna sandwich recipe', 'Toast two slices of preferred bread, pour can of tuna and spread that between toasted bread and serve', 'Tuna sandwich');
 
 INSERT
 INTO R7(recipeName, instructions, foodName)
@@ -657,6 +664,9 @@ INSERT
 INTO R7(recipeName, instructions, foodName)
 VALUES('Pasta salad recipe', 'Cook pasta until al dante then run over cold water to prevent overcooking. chop up some tomatoes, bell peppers, onions, cucumbers. Mix all ingredients well and sprinkle a choice of cheese and some Italian dressing.', 'Pasta salad');
 
+INSERT
+INTO R7(recipeName, instructions, foodName)
+VALUES('Fresh squeezed fruit juice recipe', 'Cut orange in half, and hand squeeze until all juice is out in a cup.', 'Fresh squeezed fruit juice');
 
 
 INSERT
@@ -838,6 +848,15 @@ INSERT
 INTO R10(ingredientName, recipeName, quantity) 
 VALUES ('tomato', 'Burger and Fries', 50);
 
+INSERT
+INTO R10(ingredientName, recipeName, quantity) 
+VALUES ('white bread', 'Tuna sandwich recipe', 2);
+
+INSERT
+INTO R10(ingredientName, recipeName, quantity) 
+VALUES ('tuna', 'Tuna sandwich recipe', 100);
+
+
 
 INSERT
 INTO R11(groceryStoreName, groceryStoreAddress, openHours, groceryStoreRating) 
@@ -861,28 +880,28 @@ VALUES ('Safeway', '2733 W Broadway, Vancouver, BC', '7:00-23:00', 4.1);
 
 
 
-INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
-VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'asparagus', 3);
+-- INSERT
+-- INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+-- VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'asparagus', 3);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Costco', '605 Expo Blvd, Vancouver, BC', 'greek yogurt', 5);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Save On Foods', '5945 Berton Ave, Vancouver, BC', 'steak', 20);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Real Canadian Superstore', '3185 Grandview Hwy, Vancouver, BC', 'potato', 1);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Safeway', '2733 W Broadway, Vancouver, BC', 'lettuce', 2);
 
 INSERT
-INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, sellsCost)
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'ranch', 3);
 
 
@@ -909,34 +928,65 @@ VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'ranch', 3);
 
 
 
+-- INSERT
+-- INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+-- VALUES (1, 'Beef stir fry noodles', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 'My Home Cuisine', 'Beef noodle stir fry');
+
 INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (1, 1, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (1, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
 'My Home Cuisine', 'Burger');
 
 INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (1, 1, 'Beef stir fry noodles', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 'My Home Cuisine', 'Beef noodle stir fry');
-
-INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (1, 1, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (1, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
 'My Home Cuisine', 'French fries');
 
 INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (2, 2, 'Beef stir fry noodles', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 'My Home Cuisine', 'Beef noodle stir fry');
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (1, 'Steak with asparagus and potatoes', 'bulking', '4460 W 10th Ave, Vancouver, BC V6R 2H9', 'Bella Roma Pizzeria and Ristorante',
+'Steak');
 
 INSERT
-INTO R14(userid, nutritionalReqID, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
-VALUES (2, 2, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (1, 'Steak with asparagus and potatoes', 'bulking', '4460 W 10th Ave, Vancouver, BC V6R 2H9', 'Bella Roma Pizzeria and Ristorante',
+'Asparagus');
+
+INSERT
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (1, 'Steak with asparagus and potatoes', 'bulking', '4460 W 10th Ave, Vancouver, BC V6R 2H9', 'Bella Roma Pizzeria and Ristorante',
+'Baked potatoes');
+
+INSERT
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (1, 'Beef stir fry noodles', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 'My Home Cuisine', 'Beef noodle stir fry');
+
+INSERT
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (2, 'Beef stir fry noodles', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 'My Home Cuisine', 'Beef noodle stir fry');
+
+INSERT
+INTO R14(userid, mealName, mealPlanName, restaurantAddress, restaurantName, foodName) 
+VALUES (2, 'Burger and Fries', 'regular daily', '5728 University Blvd B9, Vancouver, BC', 
 'My Home Cuisine', 'Burger');
 
 
 
 INSERT
-INTO R15(userid, nutritionalReqID, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
-VALUES(1, 1, 'Steak with asparagus and potatoes', 'regular daily', 'asparagus', 'Grilled Beef Steak', 'Costco', '9151 Bridgeport Rd, Richmond, BC', 'Steak');
+INTO R15(userid, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
+VALUES(1, 'Tuna sandwich and fresh squeezed fruit juice', 'bulking', 'white bread', 'Tuna sandwich recipe', 'Costco', '9151 Bridgeport Rd, Richmond, BC', 'Tuna sandwich');
+
+INSERT
+INTO R15(userid, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
+VALUES(1, 'Tuna sandwich and fresh squeezed fruit juice', 'bulking', 'tuna', 'Tuna sandwich recipe', 'Costco', '9151 Bridgeport Rd, Richmond, BC', 'Tuna sandwich');
+
+
+INSERT
+INTO R15(userid, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
+VALUES(1, 'Tuna sandwich and fresh squeezed fruit juice', 'bulking', 'orange', 'Fresh squeezed fruit juice recipe', 'Costco', '9151 Bridgeport Rd, Richmond, BC', 'Fresh squeezed fruit juice');
+
+
+
 
 -- INSERT
 -- INTO R15(userid, nutritionalReqID, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
