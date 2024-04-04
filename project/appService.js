@@ -309,7 +309,7 @@ async function fetchJoinedTableFromDb() {
 async function AggregateHaving(amount) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            'SELECT groceryStoreName, groceryStoreAddress FROM R12 GROUP BY groceryStoreName, groceryStoreAddress HAVING SUM(sellsCost) > :amount',
+            'SELECT groceryStoreName, groceryStoreAddress FROM R12 GROUP BY groceryStoreName, groceryStoreAddress HAVING SUM(price) > :amount',
             [amount],
             { autoCommit: true }
         );
