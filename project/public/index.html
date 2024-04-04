@@ -81,8 +81,60 @@
     <!-- A placeholder to display the count result. -->
     <div id="countResultMsg"></div> <br>
 
-    <!-- ===================================================================================== -->
+    <br><hr><br> <!-- ===================================================================================== -->
+
+    <h2>Show Joined tables</h2>
+    <table id="queryTable" border ="1">
+        <thead>
+            <tr>
+                <th>nutritionID</th>
+                <th>userID</th>
+                <th>name</th>
+                <th>address</th>
+                <th>budget</th>
+                <th>phone</th>
+                <th>requiredSugars</th>
+                <th>requiredFats</th>
+                <th>requiredProteins</th>
+                <th>requiredCalories</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br><br>
+
+    <button id="getJoined"> refresh </button> <br>
+    <!-- A placeholder to display the joined result -->
+    <div id="getJoinedMsg"></div> <br>
+
+    <br><hr><br> <!-- ===================================================================================== -->
+
+    <h2>Show stores with shopping list greater than amount</h2>
+    <table id="storeTable" border ="1">
+        <thead>
+            <tr>
+                <th>Grocery Store Name</th>
+                <th>Grocery Store Address</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br><br>
+    <h2> Insert amount
+        <form id="insertStoreTable">
+            Amount greater than: <input type="number" id="insertAmount" placeholder="Enter amount" required> <br><br>
+            <button type="submit"> submit </button> <br>
+        </form>
+
+    <br><hr><br> <!-- ===================================================================================== -->
+
+
+
+    <br><hr><br> <!-- ===================================================================================== -->
     <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
     <script src="scripts.js"></script>
+
 </body>
 </html>

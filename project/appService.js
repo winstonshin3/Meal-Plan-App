@@ -145,11 +145,49 @@ async function countDemotable() {
     });
 }
 
+async function fetchJoinedTableFromDb() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM R2 JOIN R1 USING (nutritionalReqID)');
+        //console.log(result);
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+async function AggregateHaving(amount) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            'SELECT groceryStoreName, groceryStoreAddress FROM R12 GROUP BY groceryStoreName, groceryStoreAddress HAVING SUM(sellsCost) > :amount',
+            [amount],
+            { autoCommit: true }
+        );
+        //console.log("reached here")
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
+async function aggregateGroupBy(body) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            //TODO
+        );
+        return result.rows;
+    }).catch((err) => {
+        return [];
+    });
+}
+
 module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,
     initiateDemotable, 
     insertDemotable, 
     updateNameDemotable, 
-    countDemotable
+    countDemotable,
+    fetchJoinedTableFromDb,
+    AggregateHaving,
+    aggregateGroupBy
 };

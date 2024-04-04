@@ -158,6 +158,82 @@ async function countDemotable() {
     }
 }
 
+async function DisplayJoined() {
+    //console.log("something should be here");
+    const tableElement = document.getElementById("queryTable");
+    const tableBody = tableElement.querySelector("tbody")
+
+    //console.log("something should be here ");
+
+    const response = await fetch("/joinedQuery", {
+        method: "GET"
+    })
+    //console.log(response);
+    const responseData = await response.json();
+    //console.log("something should be here as well");
+    const joinedTableContent = responseData.data;
+    //console.log(joinedTableContent);
+    if(tableBody) {
+        tableBody.innerHTML = "";
+    }
+
+    joinedTableContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    })
+
+}
+
+async function findGreaterPrice(event) {
+    event.preventDefault();
+
+    const amountValue = document.getElementById('insertAmount').value;
+
+    const response = await fetch('/aggregate-having', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            amount: amountValue
+        })
+    });
+
+    if (!response.ok) {
+        console.log("failed");
+        return;
+    }
+    const responseData = await response.json();
+
+    console.log("stores retrieved succesfully");
+    displayStoreData(responseData);
+}
+
+async function displayStoreData(responseData) {
+    //console.log("something should be here");
+    const tableElement = document.getElementById("storeTable");
+    const tableBody = tableElement.querySelector("tbody")
+
+    //console.log("something should be here ");
+    //console.log("something should be here as well");
+    const storeTableContent = responseData.data;
+    console.log(responseData);
+    //console.log(joinedTableContent);
+    if(tableBody) {
+        tableBody.innerHTML = "";
+    }
+
+    storeTableContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    })
+}
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -169,6 +245,8 @@ window.onload = function() {
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    document.getElementById("getJoined").addEventListener("click", DisplayJoined);
+    document.getElementById("insertStoreTable").addEventListener("submit", findGreaterPrice);
 };
 
 // General function to refresh the displayed table data. 

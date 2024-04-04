@@ -66,5 +66,34 @@ router.get('/count-demotable', async (req, res) => {
     }
 });
 
+router.get('/joinedQuery', async (req, res) => {
+    // Implementation of the backend
+    const tableContent = await appService.fetchJoinedTableFromDb();
+    //console.log(tableContent);
+    const headers = ["User ID", "Name", "Address", "Budget", "Phone", "Nutrition Requirement ID", 
+    "Required total Sugars", "Required total Fats", "Required total Proteins", "Required total Calories"]
+    // Returning result to front end.
+    res.json({ data: tableContent, headers: headers});
+});
+
+router.post("/aggregate-having", async (req, res) => {
+    const { amount } = req.body;
+    const updateResult = await appService.AggregateHaving(amount);
+    if (updateResult) {
+        res.status(200).json({ data: updateResult });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.post("/aggregate-groupby", (req, res) => {
+    const body = req.body;
+    appService.aggregateGroupBy(body).then((result) => {
+        res.status(200).json({ data: result });
+    }).catch((err) => {
+        res.status(500).json({ error: err.toString() });
+    });
+})
+
 
 module.exports = router;

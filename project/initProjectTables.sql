@@ -174,69 +174,69 @@ INSERT INTO R1(nutritionalReqID, nutritionalReqTotalSugars, nutritionalReqTotalF
 
 INSERT
 INTO R1(nutritionalReqID, nutritionalReqTotalSugars, nutritionalReqTotalFats, nutritionalReqTotalProteins, nutritionalReqTotalCalories)
-VALUES(1, 300, 55, 70, 2400);
+VALUES(10, 300, 55, 70, 2400);
 
 INSERT
 INTO R1(nutritionalReqID, nutritionalReqTotalSugars, nutritionalReqTotalFats, nutritionalReqTotalProteins, nutritionalReqTotalCalories)
-VALUES(2, 483, 65, 280, 3400);
+VALUES(20, 483, 65, 280, 3400);
 
 INSERT
 INTO R1(nutritionalReqID, nutritionalReqTotalSugars, nutritionalReqTotalFats, nutritionalReqTotalProteins, nutritionalReqTotalCalories)
-VALUES(3, 367, 46, 211, 2400);
+VALUES(30, 367, 46, 211, 2400);
 
 INSERT
 INTO R1(nutritionalReqID, nutritionalReqTotalSugars, nutritionalReqTotalFats, nutritionalReqTotalProteins, nutritionalReqTotalCalories)
-VALUES(4, 280, 44, 120, 2000);
+VALUES(40, 280, 44, 120, 2000);
 
 INSERT
 INTO R1(nutritionalReqID, nutritionalReqTotalSugars, nutritionalReqTotalFats, nutritionalReqTotalProteins, nutritionalReqTotalCalories)
-VALUES(5, 275, 50, 100, 2400);
+VALUES(50, 275, 50, 100, 2400);
 
 INSERT
 INTO R1(nutritionalReqID, nutritionalReqTotalSugars, nutritionalReqTotalFats, nutritionalReqTotalProteins, nutritionalReqTotalCalories)
-VALUES(6, 225, 49, 60, 1900);
+VALUES(60, 225, 49, 60, 1900);
 
 INSERT
 INTO R1(nutritionalReqID, nutritionalReqTotalSugars, nutritionalReqTotalFats, nutritionalReqTotalProteins, nutritionalReqTotalCalories)
-VALUES(7, 210, 43, 120, 1800);
+VALUES(70, 210, 43, 120, 1800);
 
 INSERT
 INTO R1(nutritionalReqID, nutritionalReqTotalSugars, nutritionalReqTotalFats, nutritionalReqTotalProteins, nutritionalReqTotalCalories)
-VALUES(8, 210, 43, 120, 1800);
+VALUES(80, 210, 43, 120, 1800);
 
 
 
 INSERT
 INTO R2(userid, uname, uaddress, budget, phone, nutritionalReqID)
-VALUES(1, 'Jennifer', '335 Elbing street', 150, '778-365-7145', 1);
+VALUES(1, 'Jennifer', '335 Elbing street', 150, '778-365-7145', 10);
 
 INSERT
 INTO R2(userid, uname, uaddress, budget, phone, nutritionalReqID)
-VALUES(2, 'David', '1743 Grey Avenue', 120, '778-563-9865', 2);
+VALUES(2, 'David', '1743 Grey Avenue', 120, '778-563-9865', 20);
 
 INSERT
 INTO R2(userid, uname, uaddress, budget, phone, nutritionalReqID)
-VALUES(3, 'Chadwick', '8987 Webber street', 400, '778-451-2333', 3);
+VALUES(3, 'Chadwick', '8987 Webber street', 400, '778-451-2333', 30);
 
 INSERT
 INTO R2(userid, uname, uaddress, budget, phone, nutritionalReqID)
-VALUES(4, 'Mathew', '133 14th street', 200, '236-446-3535', 4);
+VALUES(4, 'Mathew', '133 14th street', 200, '236-446-3535', 40);
 
 INSERT
 INTO R2(userid, uname, uaddress, budget, phone, nutritionalReqID)
-VALUES(5, 'Victoria', '8763 cross drive', 600, '778-867-9025', 5);
+VALUES(5, 'Victoria', '8763 cross drive', 600, '778-867-9025', 50);
 
 INSERT
 INTO R2(userid, uname, uaddress, budget, phone, nutritionalReqID)
-VALUES(6, 'Ethan', '5418 cross drive', 260, '604-379-6581', 6);
+VALUES(6, 'Ethan', '5418 cross drive', 260, '604-379-6581', 60);
 
 INSERT
 INTO R2(userid, uname, uaddress, budget, phone, nutritionalReqID)
-VALUES(7, 'Peggy', '687 14th Avenue East', 350, '778-981-3630', 7);
+VALUES(7, 'Peggy', '687 14th Avenue East', 350, '778-981-3630', 70);
 
 INSERT
 INTO R2(userid, uname, uaddress, budget, phone, nutritionalReqID)
-VALUES(8, 'Cindy', '8763 Sexsmith drive', 300, '236-856-7975', 8);
+VALUES(8, 'Cindy', '8763 Sexsmith drive', 300, '236-856-7975', 80);
 
 
 
