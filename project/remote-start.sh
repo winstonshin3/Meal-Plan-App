@@ -46,7 +46,7 @@ for PORT in $(seq $START $END); do
         # Kill the temporary process
         kill $TEMP_PID
 
-        sqlplus ora_ianqin01/a10687325@stu @initProjectTables.sql < /dev/null
+        sqlplus ora_shin6/a35537142@stu @initProjectTables.sql < /dev/null
 
         # exec start initProjectTables.sql
         echo "Executed .sql file. Disconnecting from sqlplus now.."

@@ -91,6 +91,7 @@ async function projectTable(event) {
   const responseData = await response.json();
   const demotableContent = responseData.data;
   const demotableHeaders = columnNameValue.split(",");
+  console.log(demotableHeaders);
   if (thead) {
     thead.innerHTML = "";
   }
@@ -116,6 +117,56 @@ async function projectTable(event) {
     messageElement.textContent = "Table projected successfully!";
   } else {
     messageElement.textContent = "Error projecting table!";
+  }
+}
+
+
+async function selectTable(event) {
+  event.preventDefault();
+  const conditionalValue = document.getElementById("resultConditional").value;
+  const tableElement = document.getElementById("selectTable");
+  const tableBody = tableElement.querySelector("tbody");
+  const thead = tableElement.querySelector("thead");
+  // console.log(conditionalValue);
+  const response = await fetch("/selectTable", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      conditional: conditionalValue,
+    }),
+  });
+  const responseData = await response.json();
+  const demotableContent = responseData.data;
+  const demotableHeaders = responseData.headers;
+  console.log(responseData);
+  // const demotableHeaders = demotableContent.headers;
+  if (thead) {
+    thead.innerHTML = "";
+  }
+  const headerRow = thead.insertRow();
+  demotableHeaders.forEach((header) => {
+    const th = document.createElement("th");
+    th.textContent = header;
+    headerRow.appendChild(th);
+  });
+  if (tableBody) {
+    tableBody.innerHTML = "";
+  }
+  demotableContent.forEach((user) => {
+    const row = tableBody.insertRow();
+    user.forEach((field, index) => {
+      const cell = row.insertCell(index);
+      cell.textContent = field;
+    });
+  });
+
+  const messageElement = document.getElementById("selectTableMsg");
+  if (responseData.success) {
+    messageElement.textContent = "Table selected from successfully!";
+  } else {
+    messageElement.textContent = "Error selecting from table!";
   }
 }
 
@@ -291,163 +342,160 @@ async function countDemotable() {
 }
 
 async function getGroupingAggrResult(event) {
-    console.log("Enter function.")
-    event.preventDefault();
+  console.log("Enter function.")
+  event.preventDefault();
 
-    const tableElement = document.getElementById('resultsTable');
-    const tableHeader = document.getElementById('resultsTable-header');
-    const tableBody = tableElement.querySelector('tbody');
-    const userIdValue = document.getElementById('userIdGroupingInput').value;
+  const tableElement = document.getElementById('resultsTable');
+  const tableHeader = document.getElementById('resultsTable-header');
+  const tableBody = tableElement.querySelector('tbody');
+  const userIdValue = document.getElementById('userIdGroupingInput').value;
 
-    console.log("User: ", userIdValue);
+  console.log("User: ", userIdValue);
 
-    const response = await fetch('/getMaxCaloriesInRestaurantMealPlan', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            userId: userIdValue
-        })
+  const response = await fetch('/getMaxCaloriesInRestaurantMealPlan', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userId: userIdValue
+    })
+  });
+
+  const responseData = await response.json();
+  const messageElement = document.getElementById('groupingAggrResult');
+
+  console.log("Group aggreg.", responseData);
+
+  if (responseData.success) {
+    messageElement.textContent = "Grouping with aggregation executed successfully!";
+
+    if (tableBody) {
+      tableBody.innerHTML = '';
+    }
+
+    if (tableHeader) {
+      tableHeader.innerHTML = '';
+      const row = tableHeader.insertRow();
+      const metadata = responseData.data.metaData;
+
+      for (let i = 0; i < metadata.length; i++) {
+        const headerCell = document.createElement('th');
+        headerCell.textContent = metadata[i]['name'];
+        row.appendChild(headerCell);
+      }
+    }
+
+    responseData.data.rows.forEach(data => {
+      const row = tableBody.insertRow();
+      data.forEach((field, index) => {
+        const cell = row.insertCell(index);
+        cell.textContent = field;
+      });
     });
 
-    const responseData = await response.json();
-    const messageElement = document.getElementById('groupingAggrResult');
-
-    console.log("Group aggreg.", responseData);
-
-    if (responseData.success) {
-        messageElement.textContent = "Grouping with aggregation executed successfully!";
-        
-        if (tableBody) {
-            tableBody.innerHTML = '';
-        }
-
-        if (tableHeader) {
-            tableHeader.innerHTML = '';
-            const row = tableHeader.insertRow();
-            const metadata = responseData.data.metaData;
-            
-            for (let i = 0; i < metadata.length; i++) {
-                const headerCell = document.createElement('th');
-                headerCell.textContent = metadata[i]['name'];
-                row.appendChild(headerCell);
-            }
-        }
-    
-        responseData.data.rows.forEach(data => {
-            const row = tableBody.insertRow();
-            data.forEach((field, index) => {
-                const cell = row.insertCell(index);
-                cell.textContent = field;
-            });
-        });
-
-    } else {
-        messageElement.textContent = "Error executing the grouping with aggregation!";
-    }
+  } else {
+    messageElement.textContent = "Error executing the grouping with aggregation!";
+  }
 }
 
 async function DisplayJoined() {
-    //console.log("something should be here");
-    const tableElement = document.getElementById("queryTable");
-    const tableBody = tableElement.querySelector("tbody")
+  //console.log("something should be here");
+  const tableElement = document.getElementById("queryTable");
+  const tableBody = tableElement.querySelector("tbody")
 
-    //console.log("something should be here ");
+  //console.log("something should be here ");
 
-    const response = await fetch("/joinedQuery", {
-        method: "GET"
-    })
-    //console.log(response);
-    const responseData = await response.json();
-    //console.log("something should be here as well");
-    const joinedTableContent = responseData.data;
-    //console.log(joinedTableContent);
-    if(tableBody) {
-        tableBody.innerHTML = "";
-    }
+  const response = await fetch("/joinedQuery", {
+    method: "GET"
+  })
+  //console.log(response);
+  const responseData = await response.json();
+  //console.log("something should be here as well");
+  const joinedTableContent = responseData.data;
+  //console.log(joinedTableContent);
+  if (tableBody) {
+    tableBody.innerHTML = "";
+  }
 
-    joinedTableContent.forEach(user => {
-        const row = tableBody.insertRow();
-        user.forEach((field, index) => {
-            const cell = row.insertCell(index);
-            cell.textContent = field;
-        });
-    })
+  joinedTableContent.forEach(user => {
+    const row = tableBody.insertRow();
+    user.forEach((field, index) => {
+      const cell = row.insertCell(index);
+      cell.textContent = field;
+    });
+  })
 
 }
 
 async function findGreaterPrice(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    const amountValue = document.getElementById('insertAmount').value;
+  const amountValue = document.getElementById('insertAmount').value;
 
-    const response = await fetch('/aggregate-having', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            amount: amountValue
-        })
-    });
+  const response = await fetch('/aggregate-having', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      amount: amountValue
+    })
+  });
 
-    if (!response.ok) {
-        console.log("failed");
-        return;
-    }
-    const responseData = await response.json();
+  if (!response.ok) {
+    console.log("failed");
+    return;
+  }
+  const responseData = await response.json();
 
-    console.log("stores retrieved succesfully");
-    displayStoreData(responseData);
+  console.log("stores retrieved succesfully");
+  displayStoreData(responseData);
 }
 
 async function displayStoreData(responseData) {
-    //console.log("something should be here");
-    const tableElement = document.getElementById("storeTable");
-    const tableBody = tableElement.querySelector("tbody")
+  //console.log("something should be here");
+  const tableElement = document.getElementById("storeTable");
+  const tableBody = tableElement.querySelector("tbody")
+  const storeTableContent = responseData.data;
+  console.log(responseData);
+  //console.log(joinedTableContent);
+  if (tableBody) {
+    tableBody.innerHTML = "";
+  }
 
-    //console.log("something should be here ");
-    //console.log("something should be here as well");
-    const storeTableContent = responseData.data;
-    console.log(responseData);
-    //console.log(joinedTableContent);
-    if(tableBody) {
-        tableBody.innerHTML = "";
-    }
-
-    storeTableContent.forEach(user => {
-        const row = tableBody.insertRow();
-        user.forEach((field, index) => {
-            const cell = row.insertCell(index);
-            cell.textContent = field;
-        });
-    })
+  storeTableContent.forEach(user => {
+    const row = tableBody.insertRow();
+    user.forEach((field, index) => {
+      const cell = row.insertCell(index);
+      cell.textContent = field;
+    });
+  })
 }
 
 async function displayMaxAvg() {
   const tableElement = document.getElementById("maxAverage");
   const tableBody = tableElement.querySelector("tbody")
 
-  const response = await fetch("/aggregate-groupby",{
+  const response = await fetch("/aggregate-groupby", {
     method: "GET"
   })
 
   const responseData = await response.json();
-    //console.log("something should be here as well");
+  //console.log("something should be here as well");
   const maxAverageContent = responseData.data;
-    //console.log(joinedTableContent);
-  if(tableBody) {
-        tableBody.innerHTML = "";
+  //console.log(joinedTableContent);
+  if (tableBody) {
+    tableBody.innerHTML = "";
   }
 
   maxAverageContent.forEach(user => {
-        const row = tableBody.insertRow();
-        user.forEach((field, index) => {
-            const cell = row.insertCell(index);
-            cell.textContent = field;
-        });
-    })
+    const row = tableBody.insertRow();
+    user.forEach((field, index) => {
+      const cell = row.insertCell(index);
+      cell.textContent = field;
+    });
+  })
 }
 
 // ---------------------------------------------------------------
@@ -467,6 +515,23 @@ window.onload = function () {
   document
     .getElementById("countDemotable")
     .addEventListener("click", countDemotable);
+
+  document
+    .getElementById("deleteMealPlan")
+    .addEventListener("click", deleteMealPlan);
+  document
+    .getElementById("projectTable")
+    .addEventListener("submit", projectTable);
+
+  document
+    .getElementById("selectFromTable")
+    .addEventListener("submit", selectTable);
+
+  document.getElementById("groupingAggrForm").addEventListener("click", getGroupingAggrResult);
+
+  document.getElementById("getJoined").addEventListener("click", DisplayJoined);
+  document.getElementById("insertStoreTable").addEventListener("submit", findGreaterPrice);
+  document.getElementById("getMaxAverage").addEventListener("click", displayMaxAvg);
   document
     .getElementById("resultTableR14")
     .addEventListener("click", function () {
@@ -483,9 +548,50 @@ window.onload = function () {
       displayTable("resultsTable", "/resultsTableR12");
     });
   document
+    .getElementById("resultTableR11")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR11");
+    });
+  document
     .getElementById("resultTableR10")
     .addEventListener("click", function () {
       displayTable("resultsTable", "/resultsTableR10");
+    });
+
+  document
+    .getElementById("resultTableR9")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR9");
+    });
+
+  document
+    .getElementById("resultTableR8")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR8");
+    });
+
+  document
+    .getElementById("resultTableR7")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR7");
+    });
+
+  document
+    .getElementById("resultTableR6")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR6");
+    });
+
+  document
+    .getElementById("resultTableR5")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR5");
+    });
+
+  document
+    .getElementById("resultTableR4")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR4");
     });
   document
     .getElementById("resultTableR3")
@@ -497,18 +603,13 @@ window.onload = function () {
     .addEventListener("click", function () {
       displayTable("resultsTable", "/resultsTableR2");
     });
-  document
-    .getElementById("deleteMealPlan")
-    .addEventListener("click", deleteMealPlan);
-  document
-    .getElementById("projectTable")
-    .addEventListener("submit", projectTable);
-    
-  document.getElementById("groupingAggrForm").addEventListener("click", getGroupingAggrResult);
 
-  document.getElementById("getJoined").addEventListener("click", DisplayJoined);
-  document.getElementById("insertStoreTable").addEventListener("submit", findGreaterPrice);
-  document.getElementById("getMaxAverage").addEventListener("click", displayMaxAvg);
+  document
+    .getElementById("resultTableR1")
+    .addEventListener("click", function () {
+      displayTable("resultsTable", "/resultsTableR1");
+    });
+
 };
 
 // General function to refresh the displayed table data.

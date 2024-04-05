@@ -72,65 +72,35 @@ async function testOracleConnection() {
   });
 }
 
-async function fetchR14FromDb() {
+async function fetchTableFromDb(tableName) {
   return await withOracleDB(async (connection) => {
-    const result = await connection.execute("SELECT * FROM R14");
+    const result = await connection.execute(`SELECT * FROM ${tableName}`);
     return result.rows;
   }).catch(() => {
     return [];
   });
 }
 
-async function fetchR15FromDb() {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute("SELECT * FROM R15");
-    return result.rows;
-  }).catch(() => {
-    return [];
-  });
-}
-
-async function fetchR12FromDb() {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute("SELECT * FROM R12");
-    return result.rows;
-  }).catch(() => {
-    return [];
-  });
-}
-
-async function fetchR10FromDb() {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute("SELECT * FROM R10");
-    return result.rows;
-  }).catch(() => {
-    return [];
-  });
-}
-
-async function fetchR3FromDb() {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute("SELECT * FROM R3");
-    return result.rows;
-  }).catch(() => {
-    return [];
-  });
-}
-
-async function fetchR2FromDb() {
-  return await withOracleDB(async (connection) => {
-    const result = await connection.execute("SELECT * FROM R2");
-    return result.rows;
-  }).catch(() => {
-    return [];
-  });
-}
 
 async function projectTableFromDb(body) {
   const { tableName, columnName } = body;
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
       `SELECT ${columnName} FROM ${tableName}`
+    );
+    console.log(result);
+    return result.rows;
+  }).catch(() => {
+    return [];
+  });
+}
+
+async function selectTableFromDb(body) {
+  const { conditional } = body;
+  return await withOracleDB(async (connection) => {
+    //console.log(`SELECT * FROM R2 WHERE ${conditional}`);
+    const result = await connection.execute(
+      `SELECT * FROM R2 WHERE ${conditional}`
     );
     return result.rows;
   }).catch(() => {
@@ -282,64 +252,59 @@ async function countDemotable() {
 
 //find the max calories within each meal plan at restaurants
 async function getGroupMaxTotalCaloriesQuery(userId) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            'SELECT mealPlanName AS "Meal Plan Name", MAX(totalCalories) AS "Max Meal Calories" FROM (SELECT mealPlanName, mealName, SUM(nutritionalFactTotalCalories) as totalCalories FROM R14 INNER JOIN R6 ON R14.foodName = R6.foodName WHERE R14.userId = :userId GROUP BY mealPlanName, mealName) GROUP BY mealPlanName',
-            [userId],
-            { autoCommit: true}
-        );
-        console.log("Group meal plan max calories at restaurants: ", result);
-        return result;
-    }).catch(() => {
-        return [];
-    });
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      'SELECT mealPlanName AS "Meal Plan Name", MAX(totalCalories) AS "Max Meal Calories" FROM (SELECT mealPlanName, mealName, SUM(nutritionalFactTotalCalories) as totalCalories FROM R14 INNER JOIN R6 ON R14.foodName = R6.foodName WHERE R14.userId = :userId GROUP BY mealPlanName, mealName) GROUP BY mealPlanName',
+      [userId],
+      { autoCommit: true }
+    );
+    console.log("Group meal plan max calories at restaurants: ", result);
+    return result;
+  }).catch(() => {
+    return [];
+  });
 }
 
 
 async function fetchJoinedTableFromDb() {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute('SELECT * FROM R2 JOIN R1 USING (nutritionalReqID)');
-        //console.log(result);
-        return result.rows;
-    }).catch(() => {
-        return [];
-    });
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute('SELECT * FROM R2 JOIN R1 USING (nutritionalReqID)');
+    //console.log(result);
+    return result.rows;
+  }).catch(() => {
+    return [];
+  });
 }
 
 async function AggregateHaving(amount) {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            'SELECT groceryStoreName, groceryStoreAddress FROM R12 GROUP BY groceryStoreName, groceryStoreAddress HAVING SUM(price) > :amount',
-            [amount],
-            { autoCommit: true }
-        );
-        //console.log("reached here")
-        return result.rows;
-    }).catch(() => {
-        return [];
-    });
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      'SELECT groceryStoreName, groceryStoreAddress FROM R12 GROUP BY groceryStoreName, groceryStoreAddress HAVING SUM(price) > :amount',
+      [amount],
+      { autoCommit: true }
+    );
+    //console.log("reached here")
+    return result.rows;
+  }).catch(() => {
+    return [];
+  });
 }
 
 async function aggregateGroupBy() {
-    return await withOracleDB(async (connection) => {
-        const result = await connection.execute(
-            'SELECT MAX(avg_diningTime) FROM (SELECT mealCuisine, AVG(diningTime) AS avg_diningTime FROM R4 GROUP BY mealCuisine)'
-        );
-        //console.log(result.rows[0][0]);
-        return result.rows;
-    }).catch(() => {
-        return [];
-    });
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      'SELECT MAX(avg_diningTime) FROM (SELECT mealCuisine, AVG(diningTime) AS avg_diningTime FROM R4 GROUP BY mealCuisine)'
+    );
+    //console.log(result.rows[0][0]);
+    return result.rows;
+  }).catch(() => {
+    return [];
+  });
 }
 
 module.exports = {
   testOracleConnection,
-  fetchR14FromDb,
-  fetchR15FromDb,
-  fetchR12FromDb,
-  fetchR10FromDb,
-  fetchR3FromDb,
-  fetchR2FromDb,
+  fetchTableFromDb,
   projectTableFromDb,
   insertR15,
   insertR14,
@@ -347,6 +312,7 @@ module.exports = {
   insertR10,
   deleteR3,
   updateR2,
+  selectTableFromDb,
   countDemotable,
   getGroupMaxTotalCaloriesQuery,
   fetchJoinedTableFromDb,

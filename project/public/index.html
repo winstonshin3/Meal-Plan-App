@@ -1,390 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
-		<link rel="stylesheet" href="styles.css" />
+<head>
+	<meta charset="UTF-8" />
+	<!-- This meta tag ensures that the website renders correctly across different device sizes, enhancing mobile responsiveness. -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<title>Database Application</title>
-	</head>
+	<!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
+	<link rel="stylesheet" href="styles.css" />
 
-	<body>
-		<!-- ===================================================================================== -->
-		<!-- Display the current status of the database connection. 
+	<title>Database Application</title>
+</head>
+
+<body>
+	<!-- ===================================================================================== -->
+	<!-- Display the current status of the database connection. 
          !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
          -->
-		<h1>
-			Database Connection Status:
-			<!-- An in-line placeholder to display connection status. -->
-			<span id="dbStatus"> </span>
-			<!-- A loading GIF, will be hided once get the status. -->
-			<img
-				id="loadingGif"
-				class="loading-gif"
-				src="loading_100px.gif"
-				alt="Loading..."
-			/>
-		</h1>
+	<h1>
+		Database Connection Status:
+		<!-- An in-line placeholder to display connection status. -->
+		<span id="dbStatus"> </span>
+		<!-- A loading GIF, will be hided once get the status. -->
+		<img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading..." />
+	</h1>
 
-		<br />
-		<hr />
-		<br />
-		<!-- ========================================================================= -->
+	<br />
+	<hr />
+	<br />
+	<!-- ========================================================================= -->
 
-		<!-- Show 'Demotable'. 
+	<!-- Show 'Demotable'. 
         Data will be fetched and inserted here dynamically using JavaScript. -->
-		<h2>Display Table</h2>
-		<p>
-			Click on any of the buttons below to see that table's contents! Any button
-			clicks will also be shown here.
-		</p>
-		<button id="resultTableR14">R14</button>
-		<button id="resultTableR15">R15</button>
-		<button id="resultTableR12">R12</button>
-		<button id="resultTableR10">R10</button>
-		<button id="resultTableR3">R3</button>
-		<button id="resultTableR2">R2</button>
-		<br /><br />
-		<table id="resultsTable" border="1">
-			<thead id="resultsTable-header">
-				<tr>
-					<th>Text1</th>
-					<th>Text2</th>
-					<th>Text3</th>
-					<th>Text4</th>
-				</tr>
-			</thead>
-			<tbody></tbody>
-		</table>
-		<br />
-		<h2>Project Table</h2>
-		<p>
-			Try typing "R2" and "userid, uname" into table name and column names
-			respectively and anything in conditional.
-		</p>
-		<form id="projectTable">
-			Table Name:
-			<input
-				type="text"
-				id="resultTableName"
-				placeholder="Enter Table Name"
-				required
-			/>
-			Column Names:
-			<input
-				type="text"
-				id="resultColumnNames"
-				placeholder="Enter Column Names"
-				required
-			/>
-			Conditional:
-			<input
-				type="text"
-				id="resultConditional"
-				placeholder="Not Implemented"
-				required
-			/>
-			<button type="submit">filter</button>
-		</form>
-		<div id="projectTableMsg"></div>
+	<h2>Display Table</h2>
+	<p>
+		Click on any of the buttons below to see that table's contents! Any button
+		clicks will also be shown here.
+	</p>
+	<button id="resultTableR1">R1</button>
+	<button id="resultTableR2">R2</button>
+	<button id="resultTableR3">R3</button>
+	<button id="resultTableR4">R4</button>
+	<button id="resultTableR5">R5</button>
+	<button id="resultTableR6">R6</button>
+	<button id="resultTableR7">R7</button>
+	<button id="resultTableR8">R8</button>
+	<button id="resultTableR9">R9</button>
+	<button id="resultTableR10">R10</button>
+	<button id="resultTableR11">R11</button>
+	<button id="resultTableR12">R12</button>
+	<button id="resultTableR14">R14</button>
+	<button id="resultTableR15">R15</button>
+	<br /><br />
+	<table id="resultsTable" border="1">
+		<thead id="resultsTable-header">
+			<tr>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<br />
+	<h2>Project Table</h2>
+	<p>
+		Try typing "R2" and "userid, uname" into table name and column names
+		respectively and anything in conditional.
+	</p>
+	<form id="projectTable">
+		Table Name:
+		<input type="text" id="resultTableName" placeholder="Enter Table Name" required />
+		Column Names:
+		<input type="text" id="resultColumnNames" placeholder="Enter Column Names" required />
+		<button type="submit">filter</button>
+	</form>
+	<div id="projectTableMsg"></div>
 
-		<br />
-		<hr />
-		<br />
-		<!-- ========================================================================= -->
+	<br />
+	<hr />
+	<br />
+	<!-- ========================================================================= -->
 
-		<div>
-			<p>
-				Must submit an existing value for every attribute except quantity and
-				price.
-			</p>
-			<div class="forms-container">
-				<div class="forms-innerContainer">
-					<h2>Add Homemade Food</h2>
-					<form id="insertHomeMade">
-						userID:
-						<input
-							type="number"
-							id="insertUserID1"
-							placeholder="Enter User ID"
-							required
-						/>
-						mealName:
-						<input
-							type="text"
-							id="insertMealName1"
-							placeholder="Enter Meal Name"
-							required
-						/>
-						mealPlanName:
-						<input
-							type="text"
-							id="insertMealPlanName1"
-							placeholder="Enter Meal Plan Name"
-							required
-						/>
-						foodName:
-						<input
-							type="text"
-							id="insertFoodName1"
-							placeholder="Enter Food Name"
-							required
-						/>
-						recipeName:
-						<input
-							type="text"
-							id="insertRecipeName"
-							placeholder="Enter Recipe Name"
-							required
-						/>
-						ingredientName:
-						<input
-							type="text"
-							id="insertIngredientName"
-							placeholder="Enter Name"
-							required
-						/>
-						groceryStoreName:
-						<input
-							type="text"
-							id="insertGroceryStoreName"
-							placeholder="Enter ID"
-							required
-						/>
-						groceryStoreAddress:
-						<input
-							type="text"
-							id="insertGroceryStoreAddress"
-							placeholder="Enter Name"
-							required
-						/>
-						quantity:
-						<input
-							type="text"
-							id="insertQuantity"
-							placeholder="Enter Quantity"
-							required
-						/>
-						price:
-						<input
-							type="text"
-							id="insertPrice"
-							placeholder="Enter Price"
-							required
-						/>
-						<button type="submit">insert</button>
-					</form>
-				</div>
-				<div class="forms-innerContainer">
-					<h2>Add Restaurant Food</h2>
-					<form id="insertRestaurant">
-						userID:
-						<input
-							type="number"
-							id="insertUserID2"
-							placeholder="Enter User ID"
-							required
-						/>
-						mealName:
-						<input
-							type="text"
-							id="insertMealName2"
-							placeholder="Enter Meal Name"
-							required
-						/>
-						mealPlanName:
-						<input
-							type="text"
-							id="insertMealPlanName2"
-							placeholder="Enter Meal Plan Name"
-							required
-						/>
-						foodName:
-						<input
-							type="text"
-							id="insertFoodName2"
-							placeholder="Enter Food Name"
-							required
-						/>
-						restaurantName:
-						<input
-							type="text"
-							id="insertRestaurantName"
-							placeholder="Enter Restaurant Name"
-							required
-						/>
-						restaurantAddress:
-						<input
-							type="text"
-							id="insertRestaurantAddress"
-							placeholder="Enter Restaurant Address"
-							required
-						/>
-						<button type="submit">insert</button>
-					</form>
-				</div>
+	<table id="selectTable" border="1">
+		<thead id="selectTable-header">
+			<tr>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+
+	<p>
+		For strings you need to wrap them in single quotes! You are selecting from R2.
+	</p>
+	<form id="selectFromTable">
+		Conditional:
+		<input type="text" id="resultConditional" placeholder="Not Implemented" required />
+		<button type="submit">filter</button>
+	</form>
+	<div id="selectTableMsg"></div>
+
+	<br />
+	<hr />
+	<br />
+	<!-- ========================================================================= -->
+
+	<div>
+		<p>
+			Must submit an existing value for every attribute except quantity and
+			price.
+		</p>
+		<div class="forms-container">
+			<div class="forms-innerContainer">
+				<h2>Add Homemade Food</h2>
+				<form id="insertHomeMade">
+					userID:
+					<input type="number" id="insertUserID1" placeholder="Enter User ID" required />
+					mealName:
+					<input type="text" id="insertMealName1" placeholder="Enter Meal Name" required />
+					mealPlanName:
+					<input type="text" id="insertMealPlanName1" placeholder="Enter Meal Plan Name" required />
+					foodName:
+					<input type="text" id="insertFoodName1" placeholder="Enter Food Name" required />
+					recipeName:
+					<input type="text" id="insertRecipeName" placeholder="Enter Recipe Name" required />
+					ingredientName:
+					<input type="text" id="insertIngredientName" placeholder="Enter Name" required />
+					groceryStoreName:
+					<input type="text" id="insertGroceryStoreName" placeholder="Enter ID" required />
+					groceryStoreAddress:
+					<input type="text" id="insertGroceryStoreAddress" placeholder="Enter Name" required />
+					quantity:
+					<input type="text" id="insertQuantity" placeholder="Enter Quantity" required />
+					price:
+					<input type="text" id="insertPrice" placeholder="Enter Price" required />
+					<button type="submit">insert</button>
+				</form>
+			</div>
+			<div class="forms-innerContainer">
+				<h2>Add Restaurant Food</h2>
+				<form id="insertRestaurant">
+					userID:
+					<input type="number" id="insertUserID2" placeholder="Enter User ID" required />
+					mealName:
+					<input type="text" id="insertMealName2" placeholder="Enter Meal Name" required />
+					mealPlanName:
+					<input type="text" id="insertMealPlanName2" placeholder="Enter Meal Plan Name" required />
+					foodName:
+					<input type="text" id="insertFoodName2" placeholder="Enter Food Name" required />
+					restaurantName:
+					<input type="text" id="insertRestaurantName" placeholder="Enter Restaurant Name" required />
+					restaurantAddress:
+					<input type="text" id="insertRestaurantAddress" placeholder="Enter Restaurant Address" required />
+					<button type="submit">insert</button>
+				</form>
 			</div>
 		</div>
+	</div>
 
-		<div id="insertResultMsg"></div>
+	<div id="insertResultMsg"></div>
 
-		<br />
-		<hr />
-		<br />
-		<!-- ========================================================================= -->
-		<h2>Delete Tuples in R3</h2>
-		<p>DELETE ON CASCADE is shown in R14 and R15!</p>
-		<div>
-			<form id="deleteMealPlan">
-				userID:
-				<input
-					type="number"
-					id="deleteMealPlanUserID"
-					placeholder="Enter User ID"
-					required
-				/>
-				mealPlanName:
-				<input
-					type="text"
-					id="deleteMealPlanName"
-					placeholder="Enter Meal Plan Name"
-					required
-				/>
-				<button type="submit">delete</button>
-			</form>
-		</div>
-		<div id="deleteResultMsg"></div>
-		<br />
-		<hr />
-		<br />
-		<!-- ========================================================================= -->
-
-		<h2>Update Attributes in R2</h2>
-		<p>If you try to update a primary key, it will throw an error!</p>
-		<form id="updateUserDemotable">
-			Column Name:
-			<input
-				type="text"
-				id="updateColumn"
-				placeholder="Enter Column Name"
-				required
-			/>
-			Old Value:
-			<input
-				type="text"
-				id="updateOld"
-				placeholder="Enter Old Value"
-				required
-			/>
-			New Value:
-			<input
-				type="text"
-				id="updateNew"
-				placeholder="Enter New Value"
-				required
-			/>
-			<button type="submit">update</button> <br />
+	<br />
+	<hr />
+	<br />
+	<!-- ========================================================================= -->
+	<h2>Delete Tuples in R3</h2>
+	<p>DELETE ON CASCADE is shown in R14 and R15!</p>
+	<div>
+		<form id="deleteMealPlan">
+			userID:
+			<input type="number" id="deleteMealPlanUserID" placeholder="Enter User ID" required />
+			mealPlanName:
+			<input type="text" id="deleteMealPlanName" placeholder="Enter Meal Plan Name" required />
+			<button type="submit">delete</button>
 		</form>
-		<!-- A placeholder to display messages related to the update operation. -->
-		<div id="updateNameResultMsg"></div>
+	</div>
+	<div id="deleteResultMsg"></div>
+	<br />
+	<hr />
+	<br />
+	<!-- ========================================================================= -->
 
-		<br />
-		<hr />
-		<br />
-		<!-- ========================================================================= -->
+	<h2>Update Attributes in R2</h2>
+	<p>If you try to update a primary key, it will throw an error!</p>
+	<form id="updateUserDemotable">
+		Column Name:
+		<input type="text" id="updateColumn" placeholder="Enter Column Name" required />
+		Old Value:
+		<input type="text" id="updateOld" placeholder="Enter Old Value" required />
+		New Value:
+		<input type="text" id="updateNew" placeholder="Enter New Value" required />
+		<button type="submit">update</button> <br />
+	</form>
+	<!-- A placeholder to display messages related to the update operation. -->
+	<div id="updateNameResultMsg"></div>
 
-		<h2></h2>
-		<button id="countDemotable">count</button> <br /><br />
-		<!-- A placeholder to display the count result. -->
-		<div id="countResultMsg"></div>
-		<br />
+	<br />
+	<hr />
+	<br />
+	<!-- ========================================================================= -->
 
-		<h2>Normal Grouping</h2>
-		<form id="groupingAggrForm">
-			User ID:
-			<input
-				type="number"
-				id="userIdGroupingInput"
-				placeholder="Enter User ID"
-				required
-			/>
-			<br /><br />
-			<button type="submit">Get Grouping Result</button> <br />
-		</form>
-		<div id="groupingAggrResult"></div>
+	<h2></h2>
+	<button id="countDemotable">count</button> <br /><br />
+	<!-- A placeholder to display the count result. -->
+	<div id="countResultMsg"></div>
+	<br />
 
-    <h2>Count the Tuples in DemoTable</h2>
-    <button id="countDemotable"> count </button> <br><br>
-    <!-- A placeholder to display the count result. -->
-    <div id="countResultMsg"></div> <br>
+	<h2>Normal Grouping</h2>
+	<form id="groupingAggrForm">
+		User ID:
+		<input type="number" id="userIdGroupingInput" placeholder="Enter User ID" required />
+		<br /><br />
+		<button type="submit">Get Grouping Result</button> <br />
+	</form>
+	<div id="groupingAggrResult"></div>
 
-    <br><hr><br> <!-- ===================================================================================== -->
+	<h2>Count the Tuples in DemoTable</h2>
+	<button id="countDemotable"> count </button> <br><br>
+	<!-- A placeholder to display the count result. -->
+	<div id="countResultMsg"></div> <br>
 
-    <h2>Show Joined tables</h2>
-    <table id="queryTable" border ="1">
-        <thead>
-            <tr>
-                <th>nutritionID</th>
-                <th>userID</th>
-                <th>name</th>
-                <th>address</th>
-                <th>budget</th>
-                <th>phone</th>
-                <th>requiredSugars</th>
-                <th>requiredFats</th>
-                <th>requiredProteins</th>
-                <th>requiredCalories</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+	<br>
+	<hr><br> <!-- ===================================================================================== -->
 
-    <br><br>
-
-    <button id="getJoined"> refresh </button> <br>
-    <!-- A placeholder to display the joined result -->
-    <div id="getJoinedMsg"></div> <br>
-
-    <br><hr><br> <!-- ===================================================================================== -->
-
-    <h2>Show stores with shopping list greater than amount</h2>
-    <table id="storeTable" border ="1">
-        <thead>
-            <tr>
-                <th>Grocery Store Name</th>
-                <th>Grocery Store Address</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-    <br><br>
-    <h2> Insert amount
-        <form id="insertStoreTable">
-            Amount greater than: <input type="number" id="insertAmount" placeholder="Enter amount" required> <br><br>
-            <button type="submit"> submit </button> <br>
-        </form>
-
-    <br><hr><br> <!-- ===================================================================================== -->
-
-	<h2>Find maximum average dinning time across all meal categories</h2>
-
-	<table id="maxAverage" border = "1">
-		<thread>
-			<th>maximum average dining time in minutes</th>
-		</thread>
+	<h2>Show Joined tables</h2>
+	<table id="queryTable" border="1">
+		<thead>
+			<tr>
+				<th>nutritionID</th>
+				<th>userID</th>
+				<th>name</th>
+				<th>address</th>
+				<th>budget</th>
+				<th>phone</th>
+				<th>requiredSugars</th>
+				<th>requiredFats</th>
+				<th>requiredProteins</th>
+				<th>requiredCalories</th>
+			</tr>
+		</thead>
 		<tbody></tbody>
 	</table>
 
 	<br><br>
-	<button id="getMaxAverage">get value</button>
 
-    <br><hr><br> <!-- ===================================================================================== -->
-    <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
-    <script src="scripts.js"></script>
+	<button id="getJoined"> refresh </button> <br>
+	<!-- A placeholder to display the joined result -->
+	<div id="getJoinedMsg"></div> <br>
+
+	<br>
+	<hr><br> <!-- ===================================================================================== -->
+
+	<h2>Show stores with shopping list greater than amount</h2>
+	<table id="storeTable" border="1">
+		<thead>
+			<tr>
+				<th>Grocery Store Name</th>
+				<th>Grocery Store Address</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+
+	<br><br>
+	<h2> Insert amount
+		<form id="insertStoreTable">
+			Amount greater than: <input type="number" id="insertAmount" placeholder="Enter amount" required> <br><br>
+			<button type="submit"> submit </button> <br>
+		</form>
+
+		<br>
+		<hr><br> <!-- ===================================================================================== -->
+
+		<h2>Find maximum average dinning time across all meal categories</h2>
+
+		<table id="maxAverage" border="1">
+			<thread>
+				<th>maximum average dining time in minutes</th>
+			</thread>
+			<tbody></tbody>
+		</table>
+
+		<br><br>
+		<button id="getMaxAverage">get value</button>
+
+		<br>
+		<hr><br> <!-- ===================================================================================== -->
+		<!-- External JavaScript file that contains the functionality/logic for the operations above. -->
+		<script src="scripts.js"></script>
 
 </body>
+
 </html>
