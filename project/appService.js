@@ -88,7 +88,6 @@ async function projectTableFromDb(body) {
     const result = await connection.execute(
       `SELECT ${columnName} FROM ${tableName}`
     );
-    console.log(result);
     return result.rows;
   }).catch(() => {
     return [];
@@ -98,7 +97,6 @@ async function projectTableFromDb(body) {
 async function selectTableFromDb(body) {
   const { conditional } = body;
   return await withOracleDB(async (connection) => {
-    //console.log(`SELECT * FROM R2 WHERE ${conditional}`);
     const result = await connection.execute(
       `SELECT * FROM R2 WHERE ${conditional}`
     );
@@ -258,7 +256,6 @@ async function getGroupMaxTotalCaloriesQuery(userId) {
       [userId],
       { autoCommit: true }
     );
-    // console.log("Group meal plan max calories at restaurants: ", result);
     return result;
   }).catch(() => {
     return [];
@@ -270,11 +267,11 @@ async function getGroupMaxTotalCaloriesQuery(userId) {
 async function divisionQuery(userId) {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute(
-      'SELECT DISTINCT R12_1.groceryStoreName, R12_1.groceryStoreAddress FROM R12 R12_1 WHERE R12_1.ingredientName NOT IN (SELECT DISTINCT R12_2.ingredientName FROM R12 R12_2 WHERE R12_2.ingredientName NOT IN (SELECT R15.ingredientName FROM R15 WHERE R15.userid = :userId))',
+      'SELECT DISTINCT R12_1.groceryStoreName AS "Grocery Store Name", R12_1.groceryStoreAddress AS "Grocery Store Address" FROM R12 R12_1 WHERE R12_1.ingredientName NOT IN (SELECT DISTINCT R12_2.ingredientName FROM R12 R12_2 WHERE R12_2.ingredientName NOT IN (SELECT R15.ingredientName FROM R15 WHERE R15.userid = :userId))',
       [userId],
       { autoCommit: true }
     );
-    console.log("division result: ", result);
+    
     return result;
   }).catch(() => {
     return [];
@@ -284,7 +281,7 @@ async function divisionQuery(userId) {
 async function fetchJoinedTableFromDb() {
   return await withOracleDB(async (connection) => {
     const result = await connection.execute('SELECT * FROM R2 JOIN R1 USING (nutritionalReqID)');
-    //console.log(result);
+    
     return result.rows;
   }).catch(() => {
     return [];
@@ -298,7 +295,7 @@ async function AggregateHaving(amount) {
       [amount],
       { autoCommit: true }
     );
-    //console.log("reached here")
+    
     return result.rows;
   }).catch(() => {
     return [];
@@ -310,7 +307,7 @@ async function aggregateGroupBy() {
     const result = await connection.execute(
       'SELECT MAX(avg_diningTime) FROM (SELECT mealCuisine, AVG(diningTime) AS avg_diningTime FROM R4 GROUP BY mealCuisine)'
     );
-    //console.log(result.rows[0][0]);
+    
     return result.rows;
   }).catch(() => {
     return [];

@@ -75,7 +75,7 @@ async function projectTable(event) {
   event.preventDefault();
   const tableNameValue = document.getElementById("resultTableName").value;
   const columnNameValue = document.getElementById("resultColumnNames").value;
-  const tableElement = document.getElementById("resultsTable");
+  const tableElement = document.getElementById("projectTupleTable");
   const tableBody = tableElement.querySelector("tbody");
   const thead = tableElement.querySelector("thead");
   const response = await fetch("/projectTable", {
@@ -91,7 +91,7 @@ async function projectTable(event) {
   const responseData = await response.json();
   const demotableContent = responseData.data;
   const demotableHeaders = columnNameValue.split(",");
-  console.log(demotableHeaders);
+  
   if (thead) {
     thead.innerHTML = "";
   }
@@ -127,7 +127,7 @@ async function selectTable(event) {
   const tableElement = document.getElementById("selectTable");
   const tableBody = tableElement.querySelector("tbody");
   const thead = tableElement.querySelector("thead");
-  // console.log(conditionalValue);
+  
   const response = await fetch("/selectTable", {
     method: "POST",
     headers: {
@@ -140,7 +140,7 @@ async function selectTable(event) {
   const responseData = await response.json();
   const demotableContent = responseData.data;
   const demotableHeaders = responseData.headers;
-  console.log(responseData);
+  
   // const demotableHeaders = demotableContent.headers;
   if (thead) {
     thead.innerHTML = "";
@@ -342,15 +342,13 @@ async function countDemotable() {
 }
 
 async function getGroupingAggrResult(event) {
-  console.log("Enter function.")
+  
   event.preventDefault();
 
-  const tableElement = document.getElementById('resultsTable');
-  const tableHeader = document.getElementById('resultsTable-header');
+  const tableElement = document.getElementById('groupingAggrTable');
+  const tableHeader = document.getElementById('groupingAggrTable-header');
   const tableBody = tableElement.querySelector('tbody');
   const userIdValue = document.getElementById('userIdGroupingInput').value;
-
-  console.log("User: ", userIdValue);
 
   const response = await fetch('/getMaxCaloriesInRestaurantMealPlan', {
     method: 'POST',
@@ -364,8 +362,6 @@ async function getGroupingAggrResult(event) {
 
   const responseData = await response.json();
   const messageElement = document.getElementById('groupingAggrResult');
-
-  console.log("Group aggreg.", responseData);
 
   if (responseData.success) {
     messageElement.textContent = "Grouping with aggregation executed successfully!";
@@ -411,15 +407,14 @@ async function getGroupingAggrResult(event) {
 }
 
 async function getDivision(event) {
-  console.log("Enter division function.")
+  
   event.preventDefault();
 
-  const tableElement = document.getElementById('resultsTable');
-  const tableHeader = document.getElementById('resultsTable-header');
+  const tableElement = document.getElementById('divisionTable');
+  const tableHeader = document.getElementById('divisionTable-header');
   const tableBody = tableElement.querySelector('tbody');
   const userIdValue = document.getElementById('userIdGroupingInputDivision').value;
 
-  console.log("User: ", userIdValue);
 
   const response = await fetch('/division', {
     method: 'POST',
@@ -433,8 +428,6 @@ async function getDivision(event) {
 
   const responseData = await response.json();
   const messageElement = document.getElementById('divisionResult');
-
-  console.log("Division: ", responseData);
 
   if (responseData.success) {
     messageElement.textContent = "Division query executed successfully!";
@@ -480,20 +473,16 @@ async function getDivision(event) {
 }
 
 async function DisplayJoined() {
-  //console.log("something should be here");
+  
   const tableElement = document.getElementById("queryTable");
   const tableBody = tableElement.querySelector("tbody")
-
-  //console.log("something should be here ");
 
   const response = await fetch("/joinedQuery", {
     method: "GET"
   })
-  //console.log(response);
+  
   const responseData = await response.json();
-  //console.log("something should be here as well");
   const joinedTableContent = responseData.data;
-  //console.log(joinedTableContent);
   if (tableBody) {
     tableBody.innerHTML = "";
   }
@@ -524,22 +513,19 @@ async function findGreaterPrice(event) {
   });
 
   if (!response.ok) {
-    console.log("failed");
     return;
   }
   const responseData = await response.json();
 
-  console.log("stores retrieved succesfully");
   displayStoreData(responseData);
 }
 
 async function displayStoreData(responseData) {
-  //console.log("something should be here");
+  
   const tableElement = document.getElementById("storeTable");
   const tableBody = tableElement.querySelector("tbody")
   const storeTableContent = responseData.data;
-  console.log(responseData);
-  //console.log(joinedTableContent);
+  
   if (tableBody) {
     tableBody.innerHTML = "";
   }
@@ -562,9 +548,9 @@ async function displayMaxAvg() {
   })
 
   const responseData = await response.json();
-  //console.log("something should be here as well");
+  
   const maxAverageContent = responseData.data;
-  //console.log(joinedTableContent);
+  
   if (tableBody) {
     tableBody.innerHTML = "";
   }

@@ -51,7 +51,7 @@ router.post("/division", async (req, res) => {
 router.get('/joinedQuery', async (req, res) => {
   // Implementation of the backend
   const tableContent = await appService.fetchJoinedTableFromDb();
-  //console.log(tableContent);
+  
   const headers = ["User ID", "Name", "Address", "Budget", "Phone", "Nutrition Requirement ID",
     "Required total Sugars", "Required total Fats", "Required total Proteins", "Required total Calories"]
   // Returning result to front end.
@@ -272,6 +272,7 @@ router.get("/resultsTableR6", async (req, res) => {
     "Total Fats (g)",
     "Total Proteins (g)",
     "Total Calories",
+    "Food Name"
   ];
   res.json({ data: tableContent, headers: headers });
 });
