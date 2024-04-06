@@ -902,9 +902,43 @@ VALUES('Safeway', '2733 W Broadway, Vancouver, BC', 'lettuce', 2);
 
 INSERT
 INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'steak', 15);
+
+INSERT
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'asparagus', 3);
+
+INSERT
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'potatoes', 3);
+
+INSERT
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
 VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'ranch', 3);
 
+INSERT
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'tuna', 10);
 
+INSERT
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'white bread', 3);
+
+INSERT
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+VALUES('Costco', '9151 Bridgeport Rd, Richmond, BC', 'orange', 3);
+
+INSERT
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+VALUES('Real Canadian Superstore', '3185 Grandview Hwy, Vancouver, BC', 'tuna', 1);
+
+INSERT
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+VALUES('Real Canadian Superstore', '3185 Grandview Hwy, Vancouver, BC', 'white bread', 1);
+
+INSERT
+INTO R12(groceryStoreName, groceryStoreAddress, ingredientName, price)
+VALUES('Real Canadian Superstore', '3185 Grandview Hwy, Vancouver, BC', 'orange', 1);
 
 -- INSERT
 -- INTO R13(restaurantCuisine, mealCuisine) 
@@ -985,7 +1019,17 @@ INSERT
 INTO R15(userid, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
 VALUES(1, 'Tuna sandwich and fresh squeezed fruit juice', 'bulking', 'orange', 'Fresh squeezed fruit juice recipe', 'Costco', '9151 Bridgeport Rd, Richmond, BC', 'Fresh squeezed fruit juice');
 
+INSERT
+INTO R15(userid, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
+VALUES(2, 'Burger and Fries', 'regular daily', 'ground beef', 'Burger and Fries', 'Safeway', '2733 W Broadway, Vancouver, BC', 'Burger');
 
+INSERT
+INTO R15(userid, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
+VALUES(2, 'Burger and Fries', 'regular daily', 'white bread', 'Burger and Fries', 'Safeway', '2733 W Broadway, Vancouver, BC', 'Burger');
+
+INSERT
+INTO R15(userid, mealName, mealPlanName, ingredientName, recipeName, groceryStoreName, groceryStoreAddress, foodName)
+VALUES(2, 'Burger and Fries', 'regular daily', 'potato', 'Burger and Fries', 'Safeway', '2733 W Broadway, Vancouver, BC', 'French fries');
 
 
 -- INSERT

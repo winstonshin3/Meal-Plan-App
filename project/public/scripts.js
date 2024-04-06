@@ -386,16 +386,96 @@ async function getGroupingAggrResult(event) {
       }
     }
 
-    responseData.data.rows.forEach(data => {
+    if (responseData.data.rows.length == 0) {
+      let metadata = responseData.data.metaData;
       const row = tableBody.insertRow();
-      data.forEach((field, index) => {
-        const cell = row.insertCell(index);
-        cell.textContent = field;
+
+      for (let i = 0; i < metadata.length; i++) {
+        const cell = row.insertCell(i);
+      }
+
+    } else {
+
+      responseData.data.rows.forEach(data => {
+        const row = tableBody.insertRow();
+        data.forEach((field, index) => {
+          const cell = row.insertCell(index);
+          cell.textContent = field;
+        });
       });
-    });
+    }
 
   } else {
     messageElement.textContent = "Error executing the grouping with aggregation!";
+  }
+}
+
+async function getDivision(event) {
+  console.log("Enter division function.")
+  event.preventDefault();
+
+  const tableElement = document.getElementById('resultsTable');
+  const tableHeader = document.getElementById('resultsTable-header');
+  const tableBody = tableElement.querySelector('tbody');
+  const userIdValue = document.getElementById('userIdGroupingInputDivision').value;
+
+  console.log("User: ", userIdValue);
+
+  const response = await fetch('/division', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userId: userIdValue
+    })
+  });
+
+  const responseData = await response.json();
+  const messageElement = document.getElementById('divisionResult');
+
+  console.log("Division: ", responseData);
+
+  if (responseData.success) {
+    messageElement.textContent = "Division query executed successfully!";
+
+    if (tableBody) {
+      tableBody.innerHTML = '';
+    }
+
+    if (tableHeader) {
+      tableHeader.innerHTML = '';
+      const row = tableHeader.insertRow();
+      const metadata = responseData.data.metaData;
+
+      for (let i = 0; i < metadata.length; i++) {
+        const headerCell = document.createElement('th');
+        headerCell.textContent = metadata[i]['name'];
+        row.appendChild(headerCell);
+      }
+    }
+
+    if (responseData.data.rows.length == 0) {
+      let metadata = responseData.data.metaData;
+      const row = tableBody.insertRow();
+
+      for (let i = 0; i < metadata.length; i++) {
+        const cell = row.insertCell(i);
+      }
+      
+    } else {
+
+      responseData.data.rows.forEach(data => {
+        const row = tableBody.insertRow();
+        data.forEach((field, index) => {
+          const cell = row.insertCell(index);
+          cell.textContent = field;
+        });
+      });
+    }
+
+  } else {
+    messageElement.textContent = "Error executing the division query!";
   }
 }
 
@@ -512,9 +592,9 @@ window.onload = function () {
   document
     .getElementById("updateUserDemotable")
     .addEventListener("submit", updateUserDemotable);
-  document
-    .getElementById("countDemotable")
-    .addEventListener("click", countDemotable);
+  // document
+  //   .getElementById("countDemotable")
+  //   .addEventListener("click", countDemotable);
 
   document
     .getElementById("deleteMealPlan")
@@ -527,7 +607,8 @@ window.onload = function () {
     .getElementById("selectFromTable")
     .addEventListener("submit", selectTable);
 
-  document.getElementById("groupingAggrForm").addEventListener("click", getGroupingAggrResult);
+  document.getElementById("groupingAggrForm").addEventListener("submit", getGroupingAggrResult);
+  document.getElementById("divisionForm").addEventListener("submit", getDivision);
 
   document.getElementById("getJoined").addEventListener("click", DisplayJoined);
   document.getElementById("insertStoreTable").addEventListener("submit", findGreaterPrice);

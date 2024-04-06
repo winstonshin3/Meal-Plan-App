@@ -32,6 +32,22 @@ router.post("/getMaxCaloriesInRestaurantMealPlan", async (req, res) => {
   }
 });
 
+router.post("/division", async (req, res) => {
+  const userId = req.body.userId;
+  const response = await appService.divisionQuery(userId);
+  if (response) {
+    res.json({
+      success: true,
+      data: response
+    });
+  } else {
+    res.status(500).json({
+      success: false,
+      message: "Failed to get result."
+    });
+  }
+});
+
 router.get('/joinedQuery', async (req, res) => {
   // Implementation of the backend
   const tableContent = await appService.fetchJoinedTableFromDb();

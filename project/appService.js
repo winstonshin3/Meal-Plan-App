@@ -258,13 +258,28 @@ async function getGroupMaxTotalCaloriesQuery(userId) {
       [userId],
       { autoCommit: true }
     );
-    console.log("Group meal plan max calories at restaurants: ", result);
+    // console.log("Group meal plan max calories at restaurants: ", result);
     return result;
   }).catch(() => {
     return [];
   });
 }
 
+//find the stores with all the specified ingredients in a meal plan
+//find ingredients sold by all stores
+async function divisionQuery(userId) {
+  return await withOracleDB(async (connection) => {
+    const result = await connection.execute(
+      'SELECT DISTINCT R12_1.groceryStoreName, R12_1.groceryStoreAddress FROM R12 R12_1 WHERE R12_1.ingredientName NOT IN (SELECT DISTINCT R12_2.ingredientName FROM R12 R12_2 WHERE R12_2.ingredientName NOT IN (SELECT R15.ingredientName FROM R15 WHERE R15.userid = :userId))',
+      [userId],
+      { autoCommit: true }
+    );
+    console.log("division result: ", result);
+    return result;
+  }).catch(() => {
+    return [];
+  });
+}
 
 async function fetchJoinedTableFromDb() {
   return await withOracleDB(async (connection) => {
@@ -315,6 +330,7 @@ module.exports = {
   selectTableFromDb,
   countDemotable,
   getGroupMaxTotalCaloriesQuery,
+  divisionQuery,
   fetchJoinedTableFromDb,
   AggregateHaving,
   aggregateGroupBy
